@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Виноградов](https://up.htmlacademy.ru/javascript/16/user/839417).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Закурдаев](https://htmlacademy.ru/profile/eugeno).
 
 ---
 
