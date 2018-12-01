@@ -1,6 +1,6 @@
 'use strict';
 
-var COMMENTS_LIST = [
+var COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -9,7 +9,7 @@ var COMMENTS_LIST = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-var DESCRIPTIONS_LIST = [
+var DESCRIPTIONS = [
   'Тестим новую камеру!',
   'Затусили с друзьями на море',
   'Как же круто тут кормят',
@@ -18,5 +18,34 @@ var DESCRIPTIONS_LIST = [
   'Вот это тачка!'
 ];
 
-var renderDescriptions = function (arrayReturned, arrayOfComments, arrayOfDescriptions) {
+var NAMES = [
+  'Толян', 'Клара Захаровна', 'дядя Вася', 'учитель географии', 'Инна', 'Матильда', 'Константин', 'Киска',
+  'Валера', 'Сергей Геннадьевич', 'Майя Вячеславовна', 'Петруха', 'Равшан', 'Бородач', 'Лысый', 'Семён', 'Игорь',
+  'Кирилл', 'Алла', 'Скрудж МакДак', 'Джонни', 'Люси', 'Алёна', 'Викуся', 'Рыжий', 'Антоха'
+];
+
+// Возвращает случайное целое число между min (включительно) и max (не включая max)
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var createArray = function (words, descriptions, names) {
+  var arr = [];
+  for (var i = 0; i < 25; i++) {
+    var obj = {
+      url: 'photos/' + (i + 1) +'.jpg',
+      likes: getRandomInt(15, 201),
+      comments: {
+        avatar: 'img/avatar-' + getRandomInt(1, 7) + '.svg',
+        message: descriptions[getRandomInt(0, descriptions.length)],
+        name: names[getRandomInt(0, names.length)]
+      }
+    };
+    arr.push(obj);
+  }
+  return arr;
 };
+
+var arrayOfObjects = createArray(COMMENTS, DESCRIPTIONS, NAMES);
+
+console.log(arrayOfObjects);
