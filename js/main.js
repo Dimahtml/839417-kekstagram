@@ -33,7 +33,7 @@ var createArray = function (words, descriptions, names) {
   var arr = [];
   for (var i = 0; i < 25; i++) {
     var obj = {
-      url: 'photos/' + (i + 1) +'.jpg',
+      url: 'photos/' + (i + 1) + '.jpg',
       likes: getRandomInt(15, 201),
       comments: {
         avatar: 'img/avatar-' + getRandomInt(1, 7) + '.svg',
@@ -48,4 +48,21 @@ var createArray = function (words, descriptions, names) {
 
 var arrayOfObjects = createArray(COMMENTS, DESCRIPTIONS, NAMES);
 
-console.log(arrayOfObjects);
+// шаблон, который будем копировать
+var template = document.querySelector('#picture').content.querySelector('a');
+
+var createPhoto = function (someArrayOfObjects) {
+  var photo = template.cloneNode(true);
+  photo.querySelector('img').src = someArrayOfObjects.url;
+  photo.querySelector('.picture__likes').textContent = someArrayOfObjects.likes;
+  photo.querySelector('.picture__comments').textContent = 1;
+  return photo;
+};
+// сюда вставляем элементы
+var photoContainer = document.querySelector('.pictures');
+var fragment = document.createDocumentFragment();
+for (var j = 0; j < 25; j++) {
+  fragment.appendChild(createPhoto(arrayOfObjects[j]));
+}
+photoContainer.appendChild(fragment);
+
