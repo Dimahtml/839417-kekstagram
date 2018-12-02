@@ -1,5 +1,8 @@
 'use strict';
 
+var QUANTITY_PHOTOS = 25;
+var QUANTITY_AVATARS = 6;
+
 var COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -25,20 +28,20 @@ var NAMES = [
 ];
 
 // Возвращает случайное целое число между min (включительно) и max (не включая max)
-function getRandomInt(min, max) {
+var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 // функция генерации случайных данных
-var generateData = function (words, descriptions, names) {
+var generateData = function (comments, names, quantityPhotos) {
   var arr = [];
-  for (var i = 0; i < 25; i++) {
+  for (var i = 0; i < quantityPhotos; i++) {
     var obj = {
       url: 'photos/' + (i + 1) + '.jpg',
       likes: getRandomInt(15, 201),
       comments: {
-        avatar: 'img/avatar-' + getRandomInt(1, 7) + '.svg',
-        message: descriptions[getRandomInt(0, descriptions.length)],
+        avatar: 'img/avatar-' + getRandomInt(1, (QUANTITY_AVATARS + 1)) + '.svg',
+        message: comments[getRandomInt(0, comments.length)],
         name: names[getRandomInt(0, names.length)]
       }
     };
@@ -48,7 +51,7 @@ var generateData = function (words, descriptions, names) {
 };
 
 // массив с данными
-var arrayOfObjects = generateData(COMMENTS, DESCRIPTIONS, NAMES);
+var arrayOfObjects = generateData(COMMENTS, NAMES, QUANTITY_PHOTOS);
 // шаблон, который будем копировать
 var template = document.querySelector('#picture').content.querySelector('a');
 // сюда вставляем элементы
@@ -64,15 +67,15 @@ var createPhoto = function (someArrayOfObjects) {
 };
 
 // функция заполнения блока DOM-элементами на основе массива JS-объектов
-var fillThePage = function (someArrayOfObjects) {
+var fillThePage = function (someArrayOfObjects, quantityPhotos) {
   var fragment = document.createDocumentFragment();
-  for (var j = 0; j < 25; j++) {
+  for (var j = 0; j < quantityPhotos; j++) {
     fragment.appendChild(createPhoto(someArrayOfObjects[j]));
   }
   photoContainer.appendChild(fragment);
 };
 
-fillThePage(arrayOfObjects);
+fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
 
 // показываем и заполненяем данными большую фотографию
 var showBigPicture = function (index) {
@@ -90,4 +93,4 @@ var showBigPicture = function (index) {
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 };
 
-showBigPicture(3);
+showBigPicture(0);
