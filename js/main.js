@@ -29,7 +29,8 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var createArray = function (words, descriptions, names) {
+// функция генерации случайных данных
+var generateData = function (words, descriptions, names) {
   var arr = [];
   for (var i = 0; i < 25; i++) {
     var obj = {
@@ -45,12 +46,15 @@ var createArray = function (words, descriptions, names) {
   }
   return arr;
 };
-// массив с данными
-var arrayOfObjects = createArray(COMMENTS, DESCRIPTIONS, NAMES);
 
+// массив с данными
+var arrayOfObjects = generateData(COMMENTS, DESCRIPTIONS, NAMES);
 // шаблон, который будем копировать
 var template = document.querySelector('#picture').content.querySelector('a');
+// сюда вставляем элементы
+var photoContainer = document.querySelector('.pictures');
 
+// функция создания DOM-элемента на основе JS-объекта
 var createPhoto = function (someArrayOfObjects) {
   var photo = template.cloneNode(true);
   photo.querySelector('img').src = someArrayOfObjects.url;
@@ -58,26 +62,32 @@ var createPhoto = function (someArrayOfObjects) {
   photo.querySelector('.picture__comments').textContent = 1;
   return photo;
 };
-// сюда вставляем элементы
-var photoContainer = document.querySelector('.pictures');
-var fragment = document.createDocumentFragment();
-for (var j = 0; j < 25; j++) {
-  fragment.appendChild(createPhoto(arrayOfObjects[j]));
-}
-photoContainer.appendChild(fragment);
 
-var bigPhoto = document.querySelector('.big-picture');
-bigPhoto.classList.remove('hidden');
-// var bigPicture = bigPhoto.querySelector('big-picture__img');
-// console.log(arrayOfObjects[15].url);
+// функция заполнения блока DOM-элементами на основе массива JS-объектов
+var fillThePage = function (someArrayOfObjects) {
+  var fragment = document.createDocumentFragment();
+  for (var j = 0; j < 25; j++) {
+    fragment.appendChild(createPhoto(someArrayOfObjects[j]));
+  }
+  photoContainer.appendChild(fragment);
+};
 
-bigPhoto.querySelector('img').src = arrayOfObjects[0].url;
-bigPhoto.querySelector('.likes-count').textContent = arrayOfObjects[0].likes;
-bigPhoto.querySelector('.comments-count').textContent = 1;
-bigPhoto.querySelector('.social__comments').innerHTML =
-  '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
-  '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
-  arrayOfObjects[0].comments.message + '</p></li>';
-bigPhoto.querySelector('.social__caption').textContent = arrayOfObjects[0].descriptions;
-document.querySelector('.social__comment-count').classList.add('visually-hidden');
-document.querySelector('.comments-loader').classList.add('visually-hidden');
+fillThePage(arrayOfObjects);
+
+// показываем и заполненяем данными большую фотографию
+var showBigPicture = function (index) {
+  var bigPicture = document.querySelector('.big-picture');
+  bigPicture.classList.remove('hidden');
+  bigPicture.querySelector('img').src = arrayOfObjects[index].url;
+  bigPicture.querySelector('.likes-count').textContent = arrayOfObjects[index].likes;
+  bigPicture.querySelector('.comments-count').textContent = 1;
+  bigPicture.querySelector('.social__comments').innerHTML =
+    '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
+    '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
+    arrayOfObjects[0].comments.message + '</p></li>';
+  bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].descriptions;
+  document.querySelector('.social__comment-count').classList.add('visually-hidden');
+  document.querySelector('.comments-loader').classList.add('visually-hidden');
+};
+
+showBigPicture(3);
