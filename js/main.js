@@ -45,7 +45,7 @@ var createArray = function (words, descriptions, names) {
   }
   return arr;
 };
-
+// массив с данными
 var arrayOfObjects = createArray(COMMENTS, DESCRIPTIONS, NAMES);
 
 // шаблон, который будем копировать
@@ -66,3 +66,18 @@ for (var j = 0; j < 25; j++) {
 }
 photoContainer.appendChild(fragment);
 
+var bigPhoto = document.querySelector('.big-picture');
+bigPhoto.classList.remove('hidden');
+// var bigPicture = bigPhoto.querySelector('big-picture__img');
+// console.log(arrayOfObjects[15].url);
+
+bigPhoto.querySelector('img').src = arrayOfObjects[0].url;
+bigPhoto.querySelector('.likes-count').textContent = arrayOfObjects[0].likes;
+bigPhoto.querySelector('.comments-count').textContent = 1;
+bigPhoto.querySelector('.social__comments').innerHTML =
+  '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
+  '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
+  arrayOfObjects[0].comments.message + '</p></li>';
+bigPhoto.querySelector('.social__caption').textContent = arrayOfObjects[0].descriptions;
+document.querySelector('.social__comment-count').classList.add('visually-hidden');
+document.querySelector('.comments-loader').classList.add('visually-hidden');
