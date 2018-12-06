@@ -81,16 +81,49 @@ fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
 var showBigPicture = function (index) {
   var bigPicture = document.querySelector('.big-picture');
   bigPicture.classList.remove('hidden');
+  // console.log(bigPicture.querySelector('img').src);
   bigPicture.querySelector('img').src = arrayOfObjects[index].url;
-  bigPicture.querySelector('.likes-count').textContent = arrayOfObjects[index].likes;
-  bigPicture.querySelector('.comments-count').textContent = 1;
-  bigPicture.querySelector('.social__comments').innerHTML =
-    '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
-    '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
-    arrayOfObjects[0].comments.message + '</p></li>';
-  bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].descriptions;
+  // bigPicture.querySelector('.likes-count').textContent = 'arrayOfObjects[index].likes';
+  // bigPicture.querySelector('.comments-count').textContent = 1;
+  // bigPicture.querySelector('.social__comments').innerHTML =
+  //   '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
+  //   '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
+  //   arrayOfObjects[0].comments.message + '</p></li>';
+  // bigPicture.querySelector('.social__caption').textContent = 'arrayOfObjects[index].descriptions';
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
+  // находим кнопку закрытия окна (крестик) и добавляем ему обработчик событий
+  var pictureCancel = document.querySelector('#picture-cancel');
+  pictureCancel.addEventListener('click', function () {
+    bigPicture.classList.add('hidden');
+  });
 };
 
-showBigPicture(0);
+// showBigPicture(0);
+
+// Форма редактирования изображения
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+// Кнопка ЗАГРУЗИТЬ
+var uploadFile = document.querySelector('#upload-file');
+// показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
+uploadFile.addEventListener('change', function () {
+  imgUploadOverlay.classList.remove('hidden');
+  // Кнопка для закрытия формы редактирования изображения
+  var uploadCancel = document.querySelector('#upload-cancel');
+  uploadCancel.addEventListener('click', function () {
+    imgUploadOverlay.classList.add('hidden');
+  });
+});
+
+// коллекция из маленьких фотографий на странице
+var miniPictures = document.querySelectorAll('.picture__img');
+// добавляем обработчик, который показывает большую фотку определенного номера(индекса)
+var addclickHandler = function (miniPicture, miniPictureIndex) {
+  miniPicture.addEventListener('click', function () {
+    showBigPicture(miniPictureIndex);
+  })
+};
+// навешиваем обработчик на каждую из маленьких фоток
+for (var l = 0; l < miniPictures.length; l++) {
+  addclickHandler(miniPictures[l], l);
+};
