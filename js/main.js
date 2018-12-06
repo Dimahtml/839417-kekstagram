@@ -12,6 +12,9 @@ var COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
+              'effects__preview--sepia', 'effects__preview--marvin',
+              'effects__preview--phobos', 'effects__preview--heat'];
 // var DESCRIPTIONS = [
 //   'Тестим новую камеру!',
 //   'Затусили с друзьями на море',
@@ -127,3 +130,31 @@ var addclickHandler = function (miniPicture, miniPictureIndex) {
 for (var l = 0; l < miniPictures.length; l++) {
   addclickHandler(miniPictures[l], l);
 };
+
+// слайдер регулировки эффекта фотографии
+var slider = document.querySelector('.effect-level__pin');
+slider.addEventListener('mouseup', function () {
+
+});
+
+// КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
+var effects = document.querySelectorAll('.effects__radio');
+
+// фото "предварительный просмотр изображения"
+var imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
+
+// добавляем обработчик, который пишет прописывает класс "cls" элементу imageUploadPreview
+var addClickHandlerEffect = function (image, cls) {
+  image.addEventListener('click', function () {
+    imgUploadPreview.setAttribute('class', cls);
+    console.log(imgUploadPreview.classList);
+  });
+};
+
+// навешиваем обработчик на каждую из кнопок с эффектами
+for (var q = 0; q < effects.length; q++) {
+  addClickHandlerEffect(effects[q], EFFECTS[q]);
+}
+
+
+console.log(imgUploadPreview.classList);
