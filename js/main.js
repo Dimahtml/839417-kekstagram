@@ -14,8 +14,9 @@ var COMMENTS = [
 ];
 
 var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
-              'effects__preview--sepia', 'effects__preview--marvin',
-              'effects__preview--phobos', 'effects__preview--heat'];
+  'effects__preview--sepia', 'effects__preview--marvin',
+  'effects__preview--phobos', 'effects__preview--heat'
+];
 // var DESCRIPTIONS = [
 //   'Тестим новую камеру!',
 //   'Затусили с друзьями на море',
@@ -119,8 +120,9 @@ uploadFile.addEventListener('change', function () {
     imgUploadOverlay.classList.add('hidden');
   });
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE)
-    imgUploadOverlay.classList.add('hidden');
+    if (evt.keyCode === ESC_KEYCODE) {
+      imgUploadOverlay.classList.add('hidden');
+    }
   });
 });
 
@@ -130,12 +132,12 @@ var miniPictures = document.querySelectorAll('.picture__img');
 var addclickHandler = function (miniPicture, miniPictureIndex) {
   miniPicture.addEventListener('click', function () {
     showBigPicture(miniPictureIndex);
-  })
+  });
 };
 // навешиваем обработчик на каждую из маленьких фоток
 for (var l = 0; l < miniPictures.length; l++) {
   addclickHandler(miniPictures[l], l);
-};
+}
 
 // слайдер регулировки эффекта фотографии
 var slider = document.querySelector('.effect-level__pin');
@@ -153,7 +155,6 @@ var imgUploadPreview = document.querySelector('.img-upload__preview').querySelec
 var addClickHandlerEffect = function (image, cls) {
   image.addEventListener('click', function () {
     imgUploadPreview.setAttribute('class', cls);
-    console.log(imgUploadPreview.classList);
   });
 };
 
@@ -161,6 +162,3 @@ var addClickHandlerEffect = function (image, cls) {
 for (var q = 0; q < effects.length; q++) {
   addClickHandlerEffect(effects[q], EFFECTS[q]);
 }
-
-
-console.log(imgUploadPreview.classList);
