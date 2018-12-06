@@ -2,6 +2,7 @@
 
 var QUANTITY_PHOTOS = 25;
 var QUANTITY_AVATARS = 6;
+var ESC_KEYCODE = 27;
 
 var COMMENTS = [
   'Всё отлично!',
@@ -108,12 +109,17 @@ var showBigPicture = function (index) {
 var imgUploadOverlay = document.querySelector('.img-upload__overlay');
 // Кнопка ЗАГРУЗИТЬ
 var uploadFile = document.querySelector('#upload-file');
+
 // показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
 uploadFile.addEventListener('change', function () {
   imgUploadOverlay.classList.remove('hidden');
   // Кнопка для закрытия формы редактирования изображения
   var uploadCancel = document.querySelector('#upload-cancel');
   uploadCancel.addEventListener('click', function () {
+    imgUploadOverlay.classList.add('hidden');
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE)
     imgUploadOverlay.classList.add('hidden');
   });
 });
