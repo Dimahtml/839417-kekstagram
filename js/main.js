@@ -19,7 +19,7 @@ var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
 ];
 
 var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
-          // ['grayscale(', 'sepia(0..1)', 'invert(0..100%)', 'blur(0..3px)', 'brightness(1..3)'
+// ['grayscale(', 'sepia(0..1)', 'invert(0..100%)', 'blur(0..3px)', 'brightness(1..3)'
 
 
 // var DESCRIPTIONS = [
@@ -149,7 +149,7 @@ var effects = document.querySelectorAll('.effects__radio');
 var imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
 // полоска слайдера. сюда, в свойство value, записываем уровень эффекта
-var effectLevel = document.querySelector('.effect-level__value');
+// var effectLevel = document.querySelector('.effect-level__value');
 
 // ползунок слайдера регулировки эффекта фотографии
 var effectLevelPin = document.querySelector('.effect-level__pin');
@@ -165,29 +165,29 @@ var addClickHandlerEffect = function (image, cls, filterName) {
 };
 
 // переменная, которая = эффекту в процентах и зависит от положения ползунка
-var pinPosition = window.getComputedStyle(effectLevelPin, null).getPropertyValue("left");
-var pinPosition = parseInt(pinPosition);
+var pinPosition = window.getComputedStyle(effectLevelPin, null).getPropertyValue('left');
+pinPosition = parseInt(pinPosition, 10);
 // переменная, которая = текущему выбранному эффекту (фильтру)
 var filterNameCurrent = '';
 
 // навешиваем обработчик на ползунок
 effectLevelPin.addEventListener('mouseup', function () {
   if (filterNameCurrent === '') {
-        imgUploadPreview.style.filter = '';
-      } else if (filterNameCurrent === 'grayscale(1)') {
-        imgUploadPreview.style.filter = 'grayscale(' + pinPosition/100 + ')';
-      } else if (filterNameCurrent === 'sepia(1)') {
-        imgUploadPreview.style.filter = 'sepia(' + pinPosition/100 + ')';
-      } else if (filterNameCurrent === 'invert(100%)') {
-        imgUploadPreview.style.filter = 'invert(' + pinPosition + '%)';
-      } else if (filterNameCurrent === 'blur(3px)') {
-        imgUploadPreview.style.filter = 'blur(' + pinPosition/100*3 + 'px)';
-      } else if (filterNameCurrent === 'brightness(3)') {
-        imgUploadPreview.style.filter = 'brightness(' + pinPosition/100*3 + ')';
-      }
+    imgUploadPreview.style.filter = '';
+  } else if (filterNameCurrent === 'grayscale(1)') {
+    imgUploadPreview.style.filter = 'grayscale(' + pinPosition / 100 + ')';
+  } else if (filterNameCurrent === 'sepia(1)') {
+    imgUploadPreview.style.filter = 'sepia(' + pinPosition / 100 + ')';
+  } else if (filterNameCurrent === 'invert(100%)') {
+    imgUploadPreview.style.filter = 'invert(' + pinPosition + '%)';
+  } else if (filterNameCurrent === 'blur(3px)') {
+    imgUploadPreview.style.filter = 'blur(' + pinPosition / 100 * 3 + 'px)';
+  } else if (filterNameCurrent === 'brightness(3)') {
+    imgUploadPreview.style.filter = 'brightness(' + pinPosition / 100 * 3 + ')';
+  }
 });
 
 // навешиваем обработчик на каждую из кнопок, которая переключает эффект (фильтр)
 for (var q = 0; q < effects.length; q++) {
-  addClickHandlerEffect (effects[q], EFFECTS[q], FILTER_NAMES[q]);
+  addClickHandlerEffect(effects[q], EFFECTS[q], FILTER_NAMES[q]);
 }
