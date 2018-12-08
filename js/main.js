@@ -113,6 +113,17 @@ var showBigPicture = function (index) {
 var imgUploadOverlay = document.querySelector('.img-upload__overlay');
 // Кнопка ЗАГРУЗИТЬ
 var uploadFile = document.querySelector('#upload-file');
+// переменная, которая следит за фокусом в поле хеш-тега
+var isfocusedOnHash = 0;
+// поле ввода хеш-тега
+var textHastags = document.querySelector('.text__hashtags');
+
+textHastags.addEventListener('focus', function () {
+  isfocusedOnHash = 1;
+});
+textHastags.addEventListener('blur', function () {
+  isfocusedOnHash = 0;
+});
 
 // показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
 uploadFile.addEventListener('change', function () {
@@ -123,7 +134,7 @@ uploadFile.addEventListener('change', function () {
     imgUploadOverlay.classList.add('hidden');
   });
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if ((evt.keyCode === ESC_KEYCODE) && (!(isfocusedOnHash === 1))) {
       imgUploadOverlay.classList.add('hidden');
     }
   });
