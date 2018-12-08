@@ -2,6 +2,7 @@
 
 var QUANTITY_PHOTOS = 25;
 var QUANTITY_AVATARS = 6;
+var ESC_KEYCODE = 27;
 
 var COMMENTS = [
   'Всё отлично!',
@@ -11,6 +12,15 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+
+var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
+  'effects__preview--sepia', 'effects__preview--marvin',
+  'effects__preview--phobos', 'effects__preview--heat'
+];
+
+var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+// ['grayscale(', 'sepia(0..1)', 'invert(0..100%)', 'blur(0..3px)', 'brightness(1..3)'
+
 
 // var DESCRIPTIONS = [
 //   'Тестим новую камеру!',
@@ -81,16 +91,103 @@ fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
 var showBigPicture = function (index) {
   var bigPicture = document.querySelector('.big-picture');
   bigPicture.classList.remove('hidden');
+  // console.log(bigPicture.querySelector('img').src);
   bigPicture.querySelector('img').src = arrayOfObjects[index].url;
-  bigPicture.querySelector('.likes-count').textContent = arrayOfObjects[index].likes;
-  bigPicture.querySelector('.comments-count').textContent = 1;
-  bigPicture.querySelector('.social__comments').innerHTML =
-    '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
-    '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
-    arrayOfObjects[0].comments.message + '</p></li>';
-  bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].descriptions;
+  // bigPicture.querySelector('.likes-count').textContent = 'arrayOfObjects[index].likes';
+  // bigPicture.querySelector('.comments-count').textContent = 1;
+  // bigPicture.querySelector('.social__comments').innerHTML =
+  //   '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1, 7) +
+  //   '.svg"alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' +
+  //   arrayOfObjects[0].comments.message + '</p></li>';
+  // bigPicture.querySelector('.social__caption').textContent = 'arrayOfObjects[index].descriptions';
   document.querySelector('.social__comment-count').classList.add('visually-hidden');
   document.querySelector('.comments-loader').classList.add('visually-hidden');
+  // находим кнопку закрытия окна (крестик) и добавляем ему обработчик событий
+  var pictureCancel = document.querySelector('#picture-cancel');
+  pictureCancel.addEventListener('click', function () {
+    bigPicture.classList.add('hidden');
+  });
 };
 
-showBigPicture(0);
+// Форма редактирования изображения
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+// Кнопка ЗАГРУЗИТЬ
+var uploadFile = document.querySelector('#upload-file');
+
+// показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
+uploadFile.addEventListener('change', function () {
+  imgUploadOverlay.classList.remove('hidden');
+  // Кнопка для закрытия формы редактирования изображения
+  var uploadCancel = document.querySelector('#upload-cancel');
+  uploadCancel.addEventListener('click', function () {
+    imgUploadOverlay.classList.add('hidden');
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      imgUploadOverlay.classList.add('hidden');
+    }
+  });
+});
+
+// коллекция из маленьких фотографий на странице
+var miniPictures = document.querySelectorAll('.picture__img');
+// добавляем обработчик, который показывает большую фотку определенного номера(индекса)
+var addclickHandler = function (miniPicture, miniPictureIndex) {
+  miniPicture.addEventListener('click', function () {
+    showBigPicture(miniPictureIndex);
+  });
+};
+// навешиваем обработчик на каждую из маленьких фоток на главной странице
+for (var l = 0; l < miniPictures.length; l++) {
+  addclickHandler(miniPictures[l], l);
+}
+
+// КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
+var effects = document.querySelectorAll('.effects__radio');
+
+// фото "предварительный просмотр изображения"
+var imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
+
+// полоска слайдера. сюда, в свойство value, записываем уровень эффекта
+// var effectLevel = document.querySelector('.effect-level__value');
+
+// ползунок слайдера регулировки эффекта фотографии
+var effectLevelPin = document.querySelector('.effect-level__pin');
+
+// добавляем обработчик, который прописывает класс "cls" элементу imageUploadPreview
+// и устанавливает ползунок на 100% (пока еще не устанавливает)
+var addClickHandlerEffect = function (image, cls, filterName) {
+  image.addEventListener('click', function () {
+    imgUploadPreview.setAttribute('class', cls);
+    imgUploadPreview.style.filter = filterName;
+    filterNameCurrent = filterName;
+  });
+};
+
+// переменная, которая = эффекту в процентах и зависит от положения ползунка
+var pinPosition = window.getComputedStyle(effectLevelPin, null).getPropertyValue('left');
+pinPosition = parseInt(pinPosition, 10);
+// переменная, которая = текущему выбранному эффекту (фильтру)
+var filterNameCurrent = '';
+
+// навешиваем обработчик на ползунок
+effectLevelPin.addEventListener('mouseup', function () {
+  if (filterNameCurrent === '') {
+    imgUploadPreview.style.filter = '';
+  } else if (filterNameCurrent === 'grayscale(1)') {
+    imgUploadPreview.style.filter = 'grayscale(' + pinPosition / 100 + ')';
+  } else if (filterNameCurrent === 'sepia(1)') {
+    imgUploadPreview.style.filter = 'sepia(' + pinPosition / 100 + ')';
+  } else if (filterNameCurrent === 'invert(100%)') {
+    imgUploadPreview.style.filter = 'invert(' + pinPosition + '%)';
+  } else if (filterNameCurrent === 'blur(3px)') {
+    imgUploadPreview.style.filter = 'blur(' + pinPosition / 100 * 3 + 'px)';
+  } else if (filterNameCurrent === 'brightness(3)') {
+    imgUploadPreview.style.filter = 'brightness(' + pinPosition / 100 * 3 + ')';
+  }
+});
+
+// навешиваем обработчик на каждую из кнопок, которая переключает эффект (фильтр)
+for (var q = 0; q < effects.length; q++) {
+  addClickHandlerEffect(effects[q], EFFECTS[q], FILTER_NAMES[q]);
+}
