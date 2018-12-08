@@ -141,7 +141,12 @@ textHashtags.addEventListener('input', function () {
   hashtags = textHashtags.value;
   arrayOfHashtags = hashtags.split(' ');
   textHashtags.setCustomValidity('');
-  // приводим все теги к нижнему регистру и ищем проверяем на совпадения
+  // чтобы не было бага из-за пустой строки, (когда ввели текст, а потом стерли этот текст)
+  // удаляем первый элемент, если он является пустой строкой
+  if (arrayOfHashtags[0] === '') {
+    arrayOfHashtags.shift();
+  }
+  // приводим все теги к нижнему регистру и проверяем на совпадения
   for (var y = 0; y < arrayOfHashtags.length; y++) {
     for (var z = y + 1; z < arrayOfHashtags.length; z++) {
       if (arrayOfHashtags[y].toLowerCase() === arrayOfHashtags[z].toLowerCase()) {
