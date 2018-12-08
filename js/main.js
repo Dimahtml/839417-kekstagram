@@ -116,14 +116,17 @@ var uploadFile = document.querySelector('#upload-file');
 // переменная, которая следит за фокусом в поле хеш-тега или комментария
 var isfocusedOnField = 0;
 // поле ввода хеш-тега
-var textHastags = document.querySelector('.text__hashtags');
+var textHashtags = document.querySelector('.text__hashtags');
 // поле ввода комментария
 var textDescription = document.querySelector('.text__description');
 
-textHastags.addEventListener('focus', function () {
+var hashtags = '';
+var arrayOfHashtags = [];
+
+textHashtags.addEventListener('focus', function () {
   isfocusedOnField = 1;
 });
-textHastags.addEventListener('blur', function () {
+textHashtags.addEventListener('blur', function () {
   isfocusedOnField = 0;
 });
 textDescription.addEventListener('focus', function () {
@@ -131,6 +134,41 @@ textDescription.addEventListener('focus', function () {
 });
 textDescription.addEventListener('blur', function () {
   isfocusedOnField = 0;
+});
+
+// навешиваем обработчик на поле хэш-тегов
+textHashtags.addEventListener('input', function () {
+
+  hashtags = textHashtags.value;
+  arrayOfHashtags = hashtags.split(' ');
+  if (arrayOfHashtags.length > 5) {
+    textHashtags.setCustomValidity('Нельзя указывать больше пяти хеш-тегов');
+  } else {
+    textHashtags.setCustomValidity('');
+  }
+  // ищем первый элемент каждой строки. если первый символ равен #, то вернется значение 0.
+  for (var y = 0; y < arrayOfHashtags.length; y++) {
+    if ((arrayOfHashtags[y].indexOf('#')) !== 0) {
+      textHashtags.setCustomValidity('Каждый хеш-тег надо начинать с символа решётки #');
+    }
+  }
+  // проверяем длину каждого хештега
+  for (var y = 0; y < arrayOfHashtags.length; y++) {
+    if (arrayOfHashtags[y].length < 2) {
+      textHashtags.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
+    } else if (arrayOfHashtags[y].length > 20) {
+      textHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
+    }
+  }
+  // все хештеги приводим к нижнему регистру и проверяем на отсутсвие повторений
+  for (var y = 0; y < arrayOfHashtags.length - 1; y++)  {
+    for (var z = y + 1; z < arrayOfHashtags.length; z++) {
+      if (arrayOfHashtags[y].toLowerCase() === arrayOfHashtags[z].toLowerCase()) {
+        textHashtags.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды (теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом)');
+      }
+    }
+  }
+
 });
 
 // показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
