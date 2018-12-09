@@ -171,10 +171,12 @@ uploadFile.addEventListener('change', function () {
   var uploadCancel = document.querySelector('#upload-cancel');
   uploadCancel.addEventListener('click', function () {
     imgUploadOverlay.classList.add('hidden');
+    uploadFile.value = '';
   });
   document.addEventListener('keydown', function (evt) {
     if ((evt.keyCode === ESC_KEYCODE) && (!(isfocusedOnField === 1))) {
       imgUploadOverlay.classList.add('hidden');
+      uploadFile.value = '';
     }
   });
 });
