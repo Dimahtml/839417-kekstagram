@@ -138,28 +138,24 @@ textDescription.addEventListener('blur', function () {
 
 // навешиваем обработчик на поле хэш-тегов
 textHashtags.addEventListener('input', function () {
-  hashtags = textHashtags.value;
-  arrayOfHashtags = hashtags.split(' ');
+  hashtags = textHashtags.value.trim();
+  // эта запись заменяет несколько пробелов на один и разрезает массив на строки
+  arrayOfHashtags = hashtags.replace(/ +(?= )/g, '').split(' ');
   textHashtags.setCustomValidity('');
-  // чтобы не было бага из-за пустой строки, (когда ввели текст, а потом стерли этот текст)
-  // удаляем первый элемент, если он является пустой строкой
-  if (arrayOfHashtags[0] === '') {
-    arrayOfHashtags.shift();
-  }
   // приводим все теги к нижнему регистру и проверяем на совпадения
-  for (var y = 0; y < arrayOfHashtags.length; y++) {
-    for (var z = y + 1; z < arrayOfHashtags.length; z++) {
-      if (arrayOfHashtags[y].toLowerCase() === arrayOfHashtags[z].toLowerCase()) {
+  for (var k = 0; k < arrayOfHashtags.length; k++) {
+    for (var j = k + 1; j < arrayOfHashtags.length; j++) {
+      if (arrayOfHashtags[k].toLowerCase() === arrayOfHashtags[j].toLowerCase()) {
         textHashtags.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды (теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом)');
       }
     }
     // проверяем первый символ каждого хеш-тега. если первый символ # то вернется 0
-    if ((arrayOfHashtags[y].indexOf('#')) !== 0) {
+    if ((arrayOfHashtags[k].indexOf('#')) !== 0) {
       textHashtags.setCustomValidity('Каждый хеш-тег надо начинать с символа решётки #');
     // проверяем длину каждого хэш-тега
-    } else if (arrayOfHashtags[y].length < 2) {
+    } else if (arrayOfHashtags[k].length < 2) {
       textHashtags.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
-    } else if (arrayOfHashtags[y].length > 20) {
+    } else if (arrayOfHashtags[k].length > 20) {
       textHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
     }
   }
