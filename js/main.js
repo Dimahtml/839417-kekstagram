@@ -13,15 +13,6 @@ var COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
-  'effects__preview--sepia', 'effects__preview--marvin',
-  'effects__preview--phobos', 'effects__preview--heat'
-];
-
-var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
-// ['grayscale(', 'sepia(0..1)', 'invert(0..100%)', 'blur(0..3px)', 'brightness(1..3)'
-
-
 // var DESCRIPTIONS = [
 //   'Тестим новую камеру!',
 //   'Затусили с друзьями на море',
@@ -164,9 +155,10 @@ textHashtags.addEventListener('input', function () {
   }
 });
 
-// показываем форму редактирования загружаемого изображения и запускаем обработчик для закрытия формы
+// показываем форму редактирования загружаемого изображения (и прячем слайдер), запускаем обработчик для закрытия формы
 uploadFile.addEventListener('change', function () {
   imgUploadOverlay.classList.remove('hidden');
+  document.querySelector('.img-upload__effect-level').classList.add('hidden');
   // Кнопка для закрытия формы редактирования изображения
   var uploadCancel = document.querySelector('#upload-cancel');
   uploadCancel.addEventListener('click', function () {
@@ -193,9 +185,3 @@ var addclickHandler = function (miniPicture, miniPictureIndex) {
 for (var l = 0; l < miniPictures.length; l++) {
   addclickHandler(miniPictures[l], l);
 }
-
-// КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
-var effects = document.querySelectorAll('.effects__radio');
-
-// фото "предварительный просмотр изображения"
-var imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
