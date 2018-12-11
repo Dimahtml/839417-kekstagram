@@ -10,6 +10,10 @@ var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)',
 // шаг изменения масштаба изображения (25%);
 var STEP = 25;
 
+var SCALE_MINIMUM = 25;
+
+var SCALE_MAXIMUM = 100;
+
 // КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
 var effects = document.querySelectorAll('.effects__radio');
 
@@ -27,33 +31,36 @@ var effectLevelValue = document.querySelector('.effect-level__value');
 
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// кнопки - и +
+// кнопки МИНУС и ПЛЮС
 var scaleControlSmaller = document.querySelector('.scale__control--smaller');
 var scaleControlBigger = document.querySelector('.scale__control--bigger');
 // масштаб изображения
 var scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
 
+// нажатие на кнопку МИНУС
 scaleControlSmaller.addEventListener('click', function () {
-  document.querySelector('.scale__control--value').value = (scaleOfImage - STEP) + '%';
-  scaleOfImage -= STEP;
-  imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+  if (scaleOfImage > SCALE_MINIMUM) {
+    document.querySelector('.scale__control--value').value = (scaleOfImage - STEP) + '%';
+    scaleOfImage -= STEP;
+    imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+  }
 });
 
+// нажатие на кнопку ПЛЮС
 scaleControlBigger.addEventListener('click', function () {
-  document.querySelector('.scale__control--value').value = (scaleOfImage + STEP) + '%';
-  scaleOfImage += STEP;
-  imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+  if (scaleOfImage < SCALE_MAXIMUM) {
+    document.querySelector('.scale__control--value').value = (scaleOfImage + STEP) + '%';
+    scaleOfImage += STEP;
+    imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+  }
 });
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
 
 // добавляем обработчик, который прописывает класс "cls" предварительной фотографии imageUploadPreview,
 // скрывает слайдер (если фильтр оригинал). устанавливает ползунок на 100% (при других фильтрах)
 var addClickHandlerEffect = function (image, cls, filterName) {
 
   image.addEventListener('click', function () {
-
     imgUploadPreview.setAttribute('class', cls);
     if (cls === 'effects__preview--none') {
       document.querySelector('.img-upload__effect-level').classList.add('hidden');
@@ -131,7 +138,6 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
       };
       effectLevelPin.addEventListener('click', onClickPreventDefault);
     }
-
   };
 
   document.addEventListener('mousemove', onMouseMove);
