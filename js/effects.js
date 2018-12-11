@@ -7,6 +7,9 @@ var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
 
 var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 
+// шаг изменения масштаба изображения (25%);
+var STEP = 25;
+
 // КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
 var effects = document.querySelectorAll('.effects__radio');
 
@@ -22,11 +25,35 @@ var effectLevelDepth = document.querySelector('.effect-level__depth');
 // переменная-инпут.  Уровень эффекта записывается в поле .effect-level__value согласно заданию
 var effectLevelValue = document.querySelector('.effect-level__value');
 
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// кнопки - и +
+var scaleControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlBigger = document.querySelector('.scale__control--bigger');
+// масштаб изображения
+var scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+
+scaleControlSmaller.addEventListener('click', function () {
+  document.querySelector('.scale__control--value').value = (scaleOfImage - STEP) + '%';
+  scaleOfImage -= STEP;
+  imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+});
+
+scaleControlBigger.addEventListener('click', function () {
+  document.querySelector('.scale__control--value').value = (scaleOfImage + STEP) + '%';
+  scaleOfImage += STEP;
+  imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
+});
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 // добавляем обработчик, который прописывает класс "cls" предварительной фотографии imageUploadPreview,
 // скрывает слайдер (если фильтр оригинал). устанавливает ползунок на 100% (при других фильтрах)
 var addClickHandlerEffect = function (image, cls, filterName) {
 
   image.addEventListener('click', function () {
+
     imgUploadPreview.setAttribute('class', cls);
     if (cls === 'effects__preview--none') {
       document.querySelector('.img-upload__effect-level').classList.add('hidden');
@@ -34,7 +61,7 @@ var addClickHandlerEffect = function (image, cls, filterName) {
       document.querySelector('.img-upload__effect-level').classList.remove('hidden');
     }
     imgUploadPreview.style.filter = filterName;
-    effectLevelPin.style.left = '453px';
+    effectLevelPin.style.left = '100%'; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     effectLevelDepth.style.width = '100%';
     filterNameCurrent = filterName;
   });
@@ -57,7 +84,6 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
   var onMouseMove = function (moveEvt) {
     // ширина полоски-шкалы эффекта
     var effectLevelWidth = document.querySelector('.effect-level__line').offsetWidth;
-    console.log(effectLevelWidth);
     moveEvt.preventDefault();
     dragged = true;
     var shiftX = startCoordsX - moveEvt.clientX;
@@ -72,7 +98,6 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
     if (coordsPin < 0) {
       effectLevelPin.style.left = 0;
     }
-    // 453 пикселя - это ширина слайдера
     if (coordsPin > effectLevelWidth) {
       effectLevelPin.style.left = '100%';
     }

@@ -158,6 +158,9 @@ textHashtags.addEventListener('input', function () {
 // показываем форму редактирования загружаемого изображения (и прячем слайдер), запускаем обработчик для закрытия формы
 uploadFile.addEventListener('change', function () {
   imgUploadOverlay.classList.remove('hidden');
+  document.querySelector('.scale__control--value').value = 100 + '%';
+  var scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+  // console.log(document.querySelector('.scale__control--value').value);
   document.querySelector('.img-upload__effect-level').classList.add('hidden');
   // Кнопка для закрытия формы редактирования изображения
   var uploadCancel = document.querySelector('#upload-cancel');
