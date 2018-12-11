@@ -48,7 +48,6 @@ var filterNameCurrent = '';
 for (var q = 0; q < effects.length; q++) {
   addClickHandlerEffect(effects[q], EFFECTS[q], FILTER_NAMES[q]);
 }
-
 // навешиваем обработчик на ползунок
 effectLevelPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -56,23 +55,27 @@ effectLevelPin.addEventListener('mousedown', function (evt) {
   var dragged = false;
 
   var onMouseMove = function (moveEvt) {
+    // ширина полоски-шкалы эффекта
+    var effectLevelWidth = document.querySelector('.effect-level__line').offsetWidth;
+    console.log(effectLevelWidth);
     moveEvt.preventDefault();
     dragged = true;
     var shiftX = startCoordsX - moveEvt.clientX;
     startCoordsX = moveEvt.clientX;
     // рассчитываем координаты ползунка
     var coordsPin = effectLevelPin.offsetLeft - shiftX;
+    // уровень эффекта (от 0 до 100)
+    var percentOfEffect = Math.round((coordsPin) / effectLevelWidth * 100);
     // положение ползунка
-    effectLevelPin.style.left = coordsPin + 'px';
+    effectLevelPin.style.left = percentOfEffect + '%';
     // ограничиваем ползунок пределами слайдера
     if (coordsPin < 0) {
-      effectLevelPin.style.left = '0px';
+      effectLevelPin.style.left = 0;
     }
-    if (coordsPin > 453) {
-      effectLevelPin.style.left = '453px';
+    // 453 пикселя - это ширина слайдера
+    if (coordsPin > effectLevelWidth) {
+      effectLevelPin.style.left = '100%';
     }
-    // уровень эффекта (от 0 до 100)
-    var percentOfEffect = Math.round((coordsPin) / 453 * 100);
     // это значение меняем согласно заданию
     effectLevelValue.value = percentOfEffect;
     // яркая шкала (уровень эффекта)
