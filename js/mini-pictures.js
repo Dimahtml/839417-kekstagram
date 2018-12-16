@@ -1,6 +1,6 @@
 'use strict';
-// этот модуль загружает на главную страницу коллекцию мини-фотографий и
-// вешает на каждую из них обработчик показа полноразмерной фотографии и
+// этот модуль загружает на главную страницу коллекцию мини-фотографий (или выводит сообщение об ошибке в консоль)
+// вешает на каждую из мини-фотографий обработчик показа полноразмерной фотографии и
 // показывает (закрывает) полноразмерную фотографию с описанием, комментариями и лайками
 
 (function () {
@@ -75,7 +75,7 @@
 
       // закрываем окно
       document.addEventListener('keydown', function (evt) {
-        if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
+        if (evt.keyCode === window.constants.ESC_KEYCODE) {
           bigPicture.classList.add('hidden');
           document.querySelector('body').classList.remove('modal-open');
         }
@@ -97,6 +97,10 @@
 
   };
 
-  window.load (onLoad);
+  var onError = function (message) {
+    console.error(message);
+  };
+
+  window.load (onLoad, onError);
 
 })();
