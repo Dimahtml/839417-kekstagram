@@ -4,21 +4,6 @@
 
 (function () {
 
-  // коллекция из мини-фотографий на странице
-  var miniPictures = document.querySelectorAll('.picture__img');
-
-  // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
-  var addclickHandler = function (miniPicture, miniPictureIndex) {
-    miniPicture.addEventListener('click', function () {
-      showBigPicture(miniPictureIndex);
-    });
-  };
-
-  // навешиваем обработчик на каждую из маленьких фоток на главной странице
-  for (var i = 0; i < miniPictures.length; i++) {
-    addclickHandler(miniPictures[i], i);
-  }
-
   // показываем и заполняем данными большую фотографию
   var showBigPicture = function (index) {
     var bigPicture = document.querySelector('.big-picture');
