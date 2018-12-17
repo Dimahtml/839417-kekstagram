@@ -38,19 +38,15 @@
     });
   });
 
-  var onError = function (message) {
-    console.error(message);
-  };
-
-
   // при отправке формы: отменяем действие формы по умолчанию, закрываем окно с большой фоткой
   var form = document.querySelector('#upload-select-image');
   form.addEventListener('submit', function (evt) {
-    window.save(new FormData(form), function (response, onError) {
+    // window.save(new FormData(form), function (response) {  было так, но response   не определена, что это вообще такое???
+    window.save(new FormData(form), function () {
       imgUploadOverlay.classList.add('hidden');
-      uploadFile.value = '';                    //сбрасываем значение кнопки "загрузить" (для повторного открытия)
-      document.querySelector('.text__hashtags').value = '';     //сбрасываем значение поля хешей
-      document.querySelector('.text__description').value = '';  //сбрасываем значение поля комментов
+      uploadFile.value = '';// сбрасываем значение кнопки "загрузить" (для повторного открытия)
+      document.querySelector('.text__hashtags').value = '';// сбрасываем значение поля хешей
+      document.querySelector('.text__description').value = '';// сбрасываем значение поля комментов
     });
     evt.preventDefault();
   });

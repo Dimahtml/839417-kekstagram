@@ -61,8 +61,8 @@
          + arrayOfObjects[index].comments[k].avatar
          + ' alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">'
          + arrayOfObjects[index].comments[k].message
-         + '</p></li>'
-       }
+         + '</p></li>';
+      }
 
       // кнопка "загрузить еще комменты"
       // document.querySelector('.comments-loader').classList.add('hidden');
@@ -98,10 +98,12 @@
 
   };
 
-  var onError = function (message) {
-    console.error(message);
-  };
+  // var onError = function (message) {         на это ругается Тревис      NO-CONSOLE
+  //   console.error(message);
+  // };
 
-  window.load (onLoad, onError);
+  // window.load(onLoad, onError); так мы не пишем, Тревис ругается на консоль, а значит onError не определена, а значит OnError не будет
+
+  window.load(onLoad);
 
 })();

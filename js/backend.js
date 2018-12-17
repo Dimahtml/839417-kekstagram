@@ -25,12 +25,12 @@
 
     xhr.timeout = 10000; // 10s
 
-    xhr.open('GET', window.constants.URL_load);
+    xhr.open('GET', window.constants.URL_LOAD);
     xhr.send();
-  }
+  };
 
   // отправка данных на сервер
-  window.save = function (data, onLoad, onError) {
+  window.save = function (data, onLoad) { // onError Нам не нужен
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -38,8 +38,8 @@
       onLoad(xhr.response);
     });
 
-    xhr.open('POST', window.constants.URL_save);
+    xhr.open('POST', window.constants.URL_SAVE);
     xhr.send(data);
-  }
+  };
 
 })();
