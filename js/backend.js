@@ -1,9 +1,8 @@
 'use strict';
 
 (function () {
-
+  // прием данных с сервера
   window.load = function (onLoad, onError) {
-
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -26,9 +25,21 @@
 
     xhr.timeout = 10000; // 10s
 
-    xhr.open('GET', window.constants.URL);
+    xhr.open('GET', window.constants.URL_load);
     xhr.send();
+  }
 
+  // отправка данных на сервер
+  window.save = function (data, onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      onLoad(xhr.response);
+    });
+
+    xhr.open('POST', window.constants.URL_save);
+    xhr.send(data);
   }
 
 })();

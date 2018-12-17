@@ -38,6 +38,23 @@
     });
   });
 
+  var onError = function (message) {
+    console.error(message);
+  };
+
+
+  // при отправке формы: отменяем действие формы по умолчанию, закрываем окно с большой фоткой
+  var form = document.querySelector('#upload-select-image');
+  form.addEventListener('submit', function (evt) {
+    window.save(new FormData(form), function (response, onError) {
+      imgUploadOverlay.classList.add('hidden');
+      uploadFile.value = '';                    //сбрасываем значение кнопки "загрузить" (для повторного открытия)
+      document.querySelector('.text__hashtags').value = '';     //сбрасываем значение поля хешей
+      document.querySelector('.text__description').value = '';  //сбрасываем значение поля комментов
+    });
+    evt.preventDefault();
+  });
+
   // масштаб изображения
   window.scaleOfImage = scaleOfImage;
 
