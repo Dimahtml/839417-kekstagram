@@ -2,20 +2,6 @@
 // этот модуль показывает и закрывет загружаемую фотографию (при нажатии кнопки ЗАГРУЗИТЬ) и
 // отправляет данные на сервер
 
-// закрываем и очищаем форму
-var clearForm = function () {
-  document.querySelector('.img-upload__overlay').classList.add('hidden');
-  // сбрасываем значение кнопки "загрузить" (для повторного открытия)
-  document.querySelector('#upload-file').value = '';
-  // сбрасываем значение поля хешей
-  document.querySelector('.text__hashtags').value = '';
-  // сбрасываем значение поля комментов и фильтров
-  document.querySelector('.text__description').value = '';
-  document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
-  document.querySelector('.img-upload__preview').querySelector('img').setAttribute('class', 'effects__preview--none');
-  window.scaleOfImage = 100;
-};
-
 (function () {
 
   // Кнопка ЗАГРУЗИТЬ
@@ -61,6 +47,21 @@ var clearForm = function () {
 
   });
 
+  // закрываем и очищаем форму
+  var clearForm = function () {
+    document.querySelector('.img-upload__overlay').classList.add('hidden');
+    // сбрасываем значение кнопки "загрузить" (для повторного открытия)
+    document.querySelector('#upload-file').value = '';
+    // сбрасываем значение поля хешей
+    document.querySelector('.text__hashtags').value = '';
+    // сбрасываем значение поля комментов и фильтров
+    document.querySelector('.text__description').value = '';
+    document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
+    document.querySelector('.img-upload__preview').querySelector('img').setAttribute('class', 'effects__preview--none');
+    window.scaleOfImage = 100;
+  };
+
+
   // успешная отправка данных. показываем попап. закрываем попап.
   var upLoadSuccess  = function (message) {
     clearForm ();
@@ -80,7 +81,7 @@ var clearForm = function () {
       document.removeEventListener('keydown', handlerESC);
     };
 
-    var handlerESC = function () {
+    var handlerESC = function (evt) {
       if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
         main.removeChild(popup);
       }
@@ -98,8 +99,42 @@ var clearForm = function () {
 
   };
 
+  // неуспешная отправка данных. показываем попап. закрываем попап.
   var upLoadError = function (message) {
-    // alert(message);
+    console.log(message);
+
+    clearForm ();
+    // шаблон, который будем копировать
+    var template = document.querySelector('#error').content.querySelector('section');
+    // создаем окно
+    var popup = template.cloneNode(true);
+    // куда будем вставлять
+    var main = document.querySelector('main');
+    // вставляем
+    main.appendChild(popup);
+
+    var handlerClick = function () {
+      main.removeChild(popup);
+      document.removeEventListener('click', handlerClick);
+      window.removeEventListener('click', handlerClick);
+      document.removeEventListener('keydown', handlerESC);
+    };
+
+    var handlerESC = function (evt) {
+      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
+        main.removeChild(popup);
+      }
+      document.removeEventListener('click', handlerClick);
+      window.removeEventListener('click', handlerClick);
+      document.removeEventListener('keydown', handlerESC);
+    };
+
+    // обработчик на закрытие по клику мыши на кнопку
+    document.querySelector('.error__button').addEventListener('click', handlerClick);
+    // обработчик на закрытие по клику мыши на произвольную область экрана
+    window.addEventListener('click', handlerClick);
+    // обработчик на закрытие по нажатию ESC
+    document.addEventListener('keydown', handlerESC);
   };
 
   imgUploadOverlay.classList.add('hidden');
