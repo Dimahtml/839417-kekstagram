@@ -1,12 +1,13 @@
 'use strict';
 // этот модуль загружает на главную страницу коллекцию мини-фотографий (или выводит сообщение об ошибке в консоль)
 // вешает на каждую из мини-фотографий обработчик показа полноразмерной фотографии и
-// показывает (закрывает) полноразмерную фотографию с описанием, комментариями и лайками
+// показывает (закрывает) полноразмерную фотографию с описанием, комментариями и лайками и
+// принимает данные с сервера
 
 (function () {
 
   // функция загружает данные с сервера вставляет на страницу мини-фотографии
-  var onLoad = function (arrayOfObjects) {
+  var downLoadSuccess = function (arrayOfObjects) {
 
     // шаблон, который будем копировать
     var template = document.querySelector('#picture').content.querySelector('a');
@@ -98,12 +99,11 @@
 
   };
 
-  // var onError = function (message) {         на это ругается Тревис      NO-CONSOLE
-  //   console.error(message);
-  // };
+  // при ошибке получения данных с сервера выодит окно с статусом ошибки
+  var downLoadError = function (message) {
+    alert(message);
+  };
 
-  // window.load(onLoad, onError); так мы не пишем, Тревис ругается на консоль, а значит onError не определена, а значит OnError не будет
-
-  window.load(onLoad);
+  window.load(downLoadSuccess, downLoadError);
 
 })();

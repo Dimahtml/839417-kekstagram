@@ -1,12 +1,11 @@
 'use strict';
 
 (function () {
+
   // прием данных с сервера
   window.load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
-
     xhr.responseType = 'json';
-
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onLoad(xhr.response);
@@ -30,12 +29,16 @@
   };
 
   // отправка данных на сервер
-  window.save = function (data, onLoad) { // onError Нам не нужен
+  window.save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
     });
 
     xhr.open('POST', window.constants.URL_SAVE);
