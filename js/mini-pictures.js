@@ -99,11 +99,6 @@
 
   };
 
-  // при ошибке получения данных с сервера выодит окно с статусом ошибки
-  var downLoadError = function (message) {
-    alert(message);
-  };
-
-  window.load(downLoadSuccess, downLoadError);
+  window.load(downLoadSuccess);
 
 })();
