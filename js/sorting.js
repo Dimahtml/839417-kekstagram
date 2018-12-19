@@ -41,6 +41,10 @@
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
+  window.sortByPopular = function (data, quantity) {
+    window.fillThePage(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+  };
+
   // показывает 10 случайных фотографий
   window.sortByNew = function (data, quantity) {
     var dataCopy = data.slice();
@@ -76,27 +80,43 @@
     window.fillThePage(dataCopy2, 25);
   };
 
+  var lastTimeout;
+
   // раздаем обработчики клика кнопкам
   filterPopular.addEventListener('click', function() {
     chooseButton (filterPopular);
-    cleanThePage();
-    window.fillThePage(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
-    window.addHandlerToAllPictures();
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+      lastTimeout = window.setTimeout(function () {
+      cleanThePage();
+      window.sortByPopular(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.addHandlerToAllPictures();
+    }, 500);
   });
 
   filterNew.addEventListener('click', function() {
     chooseButton (filterNew);
-    var quantityPhotos = document.querySelectorAll('.picture').length;
-    cleanThePage();
-    window.sortByNew(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
-    window.addHandlerToAllPictures();
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      cleanThePage();
+      window.sortByNew(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.addHandlerToAllPictures();
+    }, 500);
   });
 
   filterDiscussed.addEventListener('click', function() {
     chooseButton(filterDiscussed);
-    cleanThePage();
-    window.sortByDiscussed(window.arrayOfObjects);
-    window.addHandlerToAllPictures();
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(function () {
+      cleanThePage();
+      window.sortByDiscussed(window.arrayOfObjects);
+      window.addHandlerToAllPictures();
+    }, 500);
   });
 
 })();
