@@ -98,12 +98,12 @@
       for (var i = 0; i < window.miniPictures.length; i++) {
         var str = window.miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
         str = str.slice(0, -4);
-        parseInt(str);
         if (str > 9) {
+          parseInt(str, 10);
         } else {
           str = str.slice(-1);
         }
-        parseInt(str);
+        parseInt(str, 10);
         window.addclickHandler(window.miniPictures[i], str - 1);
       }
     };
