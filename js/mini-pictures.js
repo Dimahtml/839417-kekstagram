@@ -24,7 +24,7 @@
     };
 
     // функция заполнения блока DOM-элементами на основе массива JS-объектов
-    var fillThePage = function (someArrayOfObjects, quantityPhotos) {
+    window.fillThePage = function (someArrayOfObjects, quantityPhotos) {
       var fragment = document.createDocumentFragment();
       for (var j = 0; j < quantityPhotos; j++) {
         fragment.appendChild(createPhoto(someArrayOfObjects[j]));
@@ -32,7 +32,7 @@
       photoContainer.appendChild(fragment);
     };
 
-    fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+    window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
 
     // коллекция из мини-фотографий на странице
     var miniPictures = document.querySelectorAll('.picture__img');
@@ -96,6 +96,12 @@
     for (var i = 0; i < miniPictures.length; i++) {
       addclickHandler(miniPictures[i], i);
     }
+
+    window.arrayOfObjects = arrayOfObjects;
+
+
+
+
 
   };
 
