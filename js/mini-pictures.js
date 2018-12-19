@@ -39,7 +39,6 @@
 
     // показываем, заполняем данными и закрываем большую фотографию
     var showBigPicture = function (index) {
-                  console.log(index);
 
       document.querySelector('body').classList.add('modal-open');
 
@@ -90,7 +89,6 @@
     window.addclickHandler = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
-        console.log('ты кликнул ма мини-фотографию');
       });
     };
 
@@ -98,8 +96,7 @@
     window.addHandlerToAllPictures = function () {
       window.miniPictures = document.querySelectorAll('.picture__img');
       for (var i = 0; i < window.miniPictures.length; i++) {
-        console.log(window.miniPictures[i].src);
-        var str = window.miniPictures[i].src.slice(-6);
+        var str = window.miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
         str = str.slice(0, -4);
         parseInt(str);
         if (str > 9) {
@@ -108,7 +105,6 @@
         }
         parseInt(str);
         window.addclickHandler(window.miniPictures[i], str - 1);
-        console.log('индекс фотки = ' + str);
       }
     };
 

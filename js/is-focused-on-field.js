@@ -43,10 +43,10 @@
         }
       }
       // проверяем первый символ каждого хеш-тега. если первый символ # то вернется 0
-      if ((arrayOfHashtags[k].indexOf('#')) !== 0) {
+      if ((arrayOfHashtags[k].indexOf('#')) !== 0 && arrayOfHashtags[0].length > 0) {
         textHashtags.setCustomValidity('Каждый хеш-тег надо начинать с символа решётки #');
       // проверяем длину каждого хэш-тега
-      } else if (arrayOfHashtags[k].length < 2) {
+      } else if ((arrayOfHashtags[k].indexOf('#')) === 0 && arrayOfHashtags[k].length === 1) {
         textHashtags.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
       } else if (arrayOfHashtags[k].length > 20) {
         textHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
