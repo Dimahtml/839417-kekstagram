@@ -2,8 +2,11 @@
 // этот модуль сортирует фотографии
 
 (function () {
+
   // показываем блок с кнопками сортировки
-  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  window.showSortingBlock = function () {
+    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  };
   // находим кнопки сортировки
   var filterPopular = document.querySelector('#filter-popular');
   var filterNew = document.querySelector('#filter-new');

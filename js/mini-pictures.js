@@ -30,6 +30,7 @@
         fragment.appendChild(createPhoto(someArrayOfObjects[j]));
       }
       photoContainer.appendChild(fragment);
+      window.showSortingBlock();
     };
 
     window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
