@@ -35,7 +35,7 @@
     window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
 
     // коллекция из мини-фотографий на странице
-    var miniPictures = document.querySelectorAll('.picture__img');
+    window.miniPictures = document.querySelectorAll('.picture__img');
 
     // показываем, заполняем данными и закрываем большую фотографию
     var showBigPicture = function (index) {
@@ -86,22 +86,26 @@
     };
 
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
-    var addclickHandler = function (miniPicture, miniPictureIndex) {
+    window.addclickHandler = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
+        console.log('ты кликнул ма мини-фотографию');
       });
     };
 
     // навешиваем обработчик на каждую из маленьких фоток на главной странице
-    for (var i = 0; i < miniPictures.length; i++) {
-      addclickHandler(miniPictures[i], i);
-    }
+    window.addHandlerToAllPictures = function () {
+      window.miniPictures = document.querySelectorAll('.picture__img');
+      for (var i = 0; i < window.miniPictures.length; i++) {
+        window.addclickHandler(window.miniPictures[i], i);
+        console.log(i);
+      }
+      console.log('что-то есть');
+    };
+
+    window.addHandlerToAllPictures();
 
     window.arrayOfObjects = arrayOfObjects;
-
-
-
-
 
   };
 

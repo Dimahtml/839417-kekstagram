@@ -43,33 +43,45 @@
 
   // показывает 10 случайных фотографий
   window.sortByNew = function (data, quantity) {
-    console.log(data);
     var dataCopy = data.slice();
-    console.log(data);
     var newArray = [];
     var index;
     // цикл составляет новый массив из 10 разных элементов начального массива
     for (var i = 0; i < 10; i ++) {
       index = getRandomInt (0, quantity);
-      console.log(quantity + ' фоток в начальном массиве');
-      console.log('выбираем фотографию под номером ' + index);
       newArray.push(dataCopy[index]);
       dataCopy.splice(index, 1); // удаляем 1 элемент под индексом = index
       quantity--;
     }
-    console.log(newArray);
     window.fillThePage(newArray, 10);
   };
 
-  // window.sortByPopular = function () {
-  //   window.fillThePage(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
-  // };
+  window.sortByDiscussed = function(data) {
+    var dataCopy2 = data.slice();
+    dataCopy2.sort(function (a, b) {
+      if (a.comments.length < b.comments.length) {
+        return 1;
+      } else
+      if (a.comments.length > b.comments.length) {
+        return -1;
+      } else
+        if (a.likes < b.likes) {
+          return 1;
+        }
+        if (a.likes > b.likes) {
+          return -1;
+        } else
+      return 0;
+    });
+    window.fillThePage(dataCopy2, 25);
+  };
 
   // раздаем обработчики клика кнопкам
   filterPopular.addEventListener('click', function() {
     chooseButton (filterPopular);
     cleanThePage();
     window.fillThePage(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+    window.addHandlerToAllPictures();
   });
 
   filterNew.addEventListener('click', function() {
@@ -77,10 +89,14 @@
     var quantityPhotos = document.querySelectorAll('.picture').length;
     cleanThePage();
     window.sortByNew(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+    window.addHandlerToAllPictures();
   });
 
   filterDiscussed.addEventListener('click', function() {
     chooseButton(filterDiscussed);
+    cleanThePage();
+    window.sortByDiscussed(window.arrayOfObjects);
+    window.addHandlerToAllPictures();
   });
 
 })();
