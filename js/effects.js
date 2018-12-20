@@ -97,20 +97,27 @@
       effectLevelValue.value = percentOfEffect;
       // яркая шкала (уровень эффекта)
       effectLevelDepth.style.width = percentOfEffect + '%';
-      if (filterNameCurrent === '') {
-        imgUploadPreview.style.filter = '';
-      } else if (filterNameCurrent === 'grayscale(1)') {
-        imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
-      } else if (filterNameCurrent === 'sepia(1)') {
-        imgUploadPreview.style.filter = 'sepia(' + percentOfEffect / 100 + ')';
-      } else if (filterNameCurrent === 'invert(100%)') {
-        imgUploadPreview.style.filter = 'invert(' + percentOfEffect + '%)';
-      } else if (filterNameCurrent === 'blur(3px)') {
-        imgUploadPreview.style.filter = 'blur(' + percentOfEffect / 100 * 3 + 'px)';
-      } else if (filterNameCurrent === 'brightness(3)') {
-        imgUploadPreview.style.filter = 'brightness(' + percentOfEffect / 100 * 3 + ')';
+
+      switch (filterNameCurrent) {
+        case 'grayscale(1)':
+          imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
+          break;
+        case 'sepia(1)':
+          imgUploadPreview.style.filter = 'sepia(' + percentOfEffect / 100 + ')';
+          break;
+        case 'invert(100%)':
+          imgUploadPreview.style.filter = 'invert(' + percentOfEffect + '%)';
+          break;
+        case 'blur(3px)':
+          imgUploadPreview.style.filter = 'blur(' + percentOfEffect / 100 * 3 + 'px)';
+          break;
+        case 'brightness(3)':
+          imgUploadPreview.style.filter = 'brightness(' + percentOfEffect / 100 * 3 + ')';
+          break;
+        default: imgUploadPreview.style.filter = '';
       }
     };
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
@@ -123,6 +130,7 @@
         effectLevelPin.addEventListener('click', onClickPreventDefault);
       }
     };
+
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
