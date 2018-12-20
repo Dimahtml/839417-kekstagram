@@ -1,12 +1,13 @@
 'use strict';
 // этот модуль загружает на главную страницу коллекцию мини-фотографий (или выводит сообщение об ошибке в консоль)
 // вешает на каждую из мини-фотографий обработчик показа полноразмерной фотографии и
-// показывает (закрывает) полноразмерную фотографию с описанием, комментариями и лайками
+// показывает (закрывает) полноразмерную фотографию с описанием, комментариями и лайками и
+// принимает данные с сервера
 
 (function () {
 
   // функция загружает данные с сервера вставляет на страницу мини-фотографии
-  var onLoad = function (arrayOfObjects) {
+  var downLoadSuccess = function (arrayOfObjects) {
 
     // шаблон, который будем копировать
     var template = document.querySelector('#picture').content.querySelector('a');
@@ -23,18 +24,19 @@
     };
 
     // функция заполнения блока DOM-элементами на основе массива JS-объектов
-    var fillThePage = function (someArrayOfObjects, quantityPhotos) {
+    window.fillThePage = function (someArrayOfObjects, quantityPhotos) {
       var fragment = document.createDocumentFragment();
       for (var j = 0; j < quantityPhotos; j++) {
         fragment.appendChild(createPhoto(someArrayOfObjects[j]));
       }
       photoContainer.appendChild(fragment);
+      window.showSortingBlock();
     };
 
-    fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+    window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
 
     // коллекция из мини-фотографий на странице
-    var miniPictures = document.querySelectorAll('.picture__img');
+    window.miniPictures = document.querySelectorAll('.picture__img');
 
     // показываем, заполняем данными и закрываем большую фотографию
     var showBigPicture = function (index) {
@@ -85,25 +87,34 @@
     };
 
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
-    var addclickHandler = function (miniPicture, miniPictureIndex) {
+    window.addclickHandler = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
       });
     };
 
     // навешиваем обработчик на каждую из маленьких фоток на главной странице
-    for (var i = 0; i < miniPictures.length; i++) {
-      addclickHandler(miniPictures[i], i);
-    }
+    window.addHandlerToAllPictures = function () {
+      window.miniPictures = document.querySelectorAll('.picture__img');
+      for (var i = 0; i < window.miniPictures.length; i++) {
+        var str = window.miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
+        str = str.slice(0, -4);
+        if (str > 9) {
+          parseInt(str, 10);
+        } else {
+          str = str.slice(-1);
+        }
+        parseInt(str, 10);
+        window.addclickHandler(window.miniPictures[i], str - 1);
+      }
+    };
+
+    window.addHandlerToAllPictures();
+
+    window.arrayOfObjects = arrayOfObjects;
 
   };
 
-  // var onError = function (message) {         на это ругается Тревис      NO-CONSOLE
-  //   console.error(message);
-  // };
-
-  // window.load(onLoad, onError); так мы не пишем, Тревис ругается на консоль, а значит onError не определена, а значит OnError не будет
-
-  window.load(onLoad);
+  window.load(downLoadSuccess);
 
 })();

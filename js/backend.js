@@ -1,12 +1,11 @@
 'use strict';
 
 (function () {
+
   // прием данных с сервера
   window.load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
-
     xhr.responseType = 'json';
-
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onLoad(xhr.response);
@@ -20,7 +19,7 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError();
     });
 
     xhr.timeout = 10000; // 10s
@@ -30,12 +29,16 @@
   };
 
   // отправка данных на сервер
-  window.save = function (data, onLoad) { // onError Нам не нужен
+  window.save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError();
+      }
     });
 
     xhr.open('POST', window.constants.URL_SAVE);

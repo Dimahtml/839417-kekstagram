@@ -1,5 +1,6 @@
 'use strict';
-// этот модуль показывает загружаемую фотографию (при нажатии кнопки ЗАГРУЗИТЬ)
+// этот модуль показывает и закрывет загружаемую фотографию (при нажатии кнопки ЗАГРУЗИТЬ) и
+// отправляет данные на сервер
 
 (function () {
 
@@ -18,37 +19,32 @@
   // показываем форму редактирования загружаемого изображения (и прячем слайдер),
   // запускаем обработчик для закрытия формы
   uploadFile.addEventListener('change', function () {
+
     imgUploadOverlay.classList.remove('hidden');
+
+    // устанавливаем масштаб 100% при открытии формы
+    document.querySelector('.scale__control--value').value = 100 + '%';
+    scaleOfImage = 100;
+    document.querySelector('.img-upload__preview').querySelector('img').style.transform = 'scale(1)';
+
+    document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
 
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
 
     // Кнопка для закрытия формы редактирования изображения
     var uploadCancel = document.querySelector('#upload-cancel');
 
+    // обработчик закрытия формы сбрасывает фильтры и масштаб с фото
     uploadCancel.addEventListener('click', function () {
-      imgUploadOverlay.classList.add('hidden');
-      uploadFile.value = '';
+      window.clearForm();
     });
 
     document.addEventListener('keydown', function (evt) {
       if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
-        imgUploadOverlay.classList.add('hidden');
-        uploadFile.value = '';
+        window.clearForm();
       }
     });
-  });
 
-  // при отправке формы: отменяем действие формы по умолчанию, закрываем окно с большой фоткой
-  var form = document.querySelector('#upload-select-image');
-  form.addEventListener('submit', function (evt) {
-    // window.save(new FormData(form), function (response) {  было так, но response   не определена, что это вообще такое???
-    window.save(new FormData(form), function () {
-      imgUploadOverlay.classList.add('hidden');
-      uploadFile.value = '';// сбрасываем значение кнопки "загрузить" (для повторного открытия)
-      document.querySelector('.text__hashtags').value = '';// сбрасываем значение поля хешей
-      document.querySelector('.text__description').value = '';// сбрасываем значение поля комментов
-    });
-    evt.preventDefault();
   });
 
   // масштаб изображения
