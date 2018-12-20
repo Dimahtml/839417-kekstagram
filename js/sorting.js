@@ -1,6 +1,8 @@
 'use strict';
 // этот модуль сортирует фотографии
 (function () {
+  var QUANTITY_PHOTOS = 25;
+
   // показываем блок с кнопками сортировки
   window.showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
