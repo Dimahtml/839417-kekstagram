@@ -7,8 +7,8 @@
   var textHashtags = document.querySelector('.text__hashtags');
   // поле ввода комментария
   var textDescription = document.querySelector('.text__description');
-  var hashtags = '';
-  var arrayOfHashtags = [];
+
+  var hashtags = [];
   textHashtags.addEventListener('focus', function () {
     isFocusedOnField = 1;
   });
@@ -30,32 +30,31 @@
   // навешиваем обработчик на поле хэш-тегов
   textHashtags.addEventListener('input', function () {
     removeRedBorder(textHashtags);
-    hashtags = textHashtags.value.trim();
     // эта запись заменяет несколько пробелов на один и разрезает массив на строки
-    arrayOfHashtags = hashtags.replace(/ +(?= )/g, '').split(' ');
+    hashtags = textHashtags.value.trim().replace(/ +(?= )/g, '').split(' ');
     textHashtags.setCustomValidity('');
     // приводим все теги к нижнему регистру и проверяем на совпадения
-    for (var k = 0; k < arrayOfHashtags.length; k++) {
-      for (var j = k + 1; j < arrayOfHashtags.length; j++) {
-        if (arrayOfHashtags[k].toLowerCase() === arrayOfHashtags[j].toLowerCase()) {
+    for (var k = 0; k < hashtags.length; k++) {
+      for (var j = k + 1; j < hashtags.length; j++) {
+        if (hashtags[k].toLowerCase() === hashtags[j].toLowerCase()) {
           textHashtags.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды (теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом)');
           addRedBorder(textHashtags);
         }
       }
       // проверяем первый символ каждого хеш-тега. если первый символ # то вернется 0
-      if ((arrayOfHashtags[k].indexOf('#')) !== 0 && arrayOfHashtags[0].length > 0) {
+      if ((hashtags[k].indexOf('#')) !== 0 && hashtags[0].length > 0) {
         textHashtags.setCustomValidity('Каждый хеш-тег надо начинать с символа решётки #');
         addRedBorder(textHashtags);
       // проверяем длину каждого хэш-тега
-      } else if ((arrayOfHashtags[k].indexOf('#')) === 0 && arrayOfHashtags[k].length === 1) {
+      } else if ((hashtags[k].indexOf('#')) === 0 && hashtags[k].length === 1) {
         textHashtags.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
         addRedBorder(textHashtags);
-      } else if (arrayOfHashtags[k].length > 20) {
+      } else if (hashtags[k].length > 20) {
         textHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
         addRedBorder(textHashtags);
       }
     }
-    if (arrayOfHashtags.length > 5) {
+    if (hashtags.length > 5) {
       textHashtags.setCustomValidity('Нельзя указывать больше пяти хеш-тегов');
       addRedBorder(textHashtags);
     }

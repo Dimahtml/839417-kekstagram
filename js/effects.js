@@ -68,6 +68,12 @@
   for (var i = 0; i < effects.length; i++) {
     addClickHandlerEffect(effects[i], effectNames[i], filterNames[i]);
   }
+
+  var onClickPreventDefault = function (evt) {
+    evt.preventDefault();
+    effectLevelPin.removeEventListener('click', onClickPreventDefault);
+  };
+
   // навешиваем обработчик на ползунок
   effectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -88,7 +94,7 @@
       effectLevelPin.style.left = percentOfEffect + '%';
       // ограничиваем ползунок пределами слайдера
       if (coordsPin < 0) {
-        effectLevelPin.style.left = 0;
+        effectLevelPin.style.left = '0';
       }
       if (coordsPin > effectLevelWidth) {
         effectLevelPin.style.left = '100%';
@@ -117,20 +123,14 @@
         default: imgUploadPreview.style.filter = '';
       }
     };
-
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       if (dragged) {
-        var onClickPreventDefault = function (evnt) {
-          evnt.preventDefault();
-          effectLevelPin.removeEventListener('click', onClickPreventDefault);
-        };
         effectLevelPin.addEventListener('click', onClickPreventDefault);
       }
     };
-
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
