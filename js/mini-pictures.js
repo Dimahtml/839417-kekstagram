@@ -22,15 +22,15 @@
       return photo;
     };
     // функция заполнения блока DOM-элементами на основе массива JS-объектов
-    window.fillThePage = function (someArrayOfObjects, quantityPhotos) {
+    var fillThePage = function (someArrayOfObjects, quantityPhotos) {
       var fragment = document.createDocumentFragment();
-      for (var j = 0; j < quantityPhotos; j++) {
-        fragment.appendChild(createPhoto(someArrayOfObjects[j]));
+      for (var i = 0; i < quantityPhotos; i++) {
+        fragment.appendChild(createPhoto(someArrayOfObjects[i]));
       }
       photoContainer.appendChild(fragment);
       window.showSortingBlock();
     };
-    window.fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
+    fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
     // коллекция из мини-фотографий на странице
     window.miniPictures = document.querySelectorAll('.picture__img');
     // показываем, заполняем данными и закрываем большую фотографию
@@ -75,7 +75,7 @@
       });
     };
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
-    window.addclickHandler = function (miniPicture, miniPictureIndex) {
+    var addClickHandler = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
       });
@@ -92,11 +92,14 @@
           str = str.slice(-1);
         }
         parseInt(str, 10);
-        window.addclickHandler(window.miniPictures[i], str - 1);
+        addClickHandler(window.miniPictures[i], str - 1);
       }
     };
     window.addHandlerToAllPictures();
     window.arrayOfObjects = arrayOfObjects;
+    window.fillThePage = fillThePage;
   };
   window.backend.load(downLoadSuccess);
+
+
 })();

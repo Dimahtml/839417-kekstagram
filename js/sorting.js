@@ -33,7 +33,7 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
   window.sortByPopular = function (data, quantity) {
-    window.fillThePage(data, quantity);
+    fillThePage(data, quantity);
   };
   // показывает 10 случайных фотографий
   window.sortByNew = function (data, quantity) {
@@ -47,7 +47,7 @@
       dataCopy.splice(index, 1); // удаляем 1 элемент под индексом = index
       quantity--;
     }
-    window.fillThePage(newArray, 10);
+    fillThePage(newArray, 10);
   };
   window.sortByDiscussed = function (data) {
     var dataCopy2 = data.slice();
@@ -66,7 +66,7 @@
       }
       return 0;
     });
-    window.fillThePage(dataCopy2, 25);
+    fillThePage(dataCopy2, 25);
   };
   var lastTimeout;
   // раздаем обработчики клика кнопкам
