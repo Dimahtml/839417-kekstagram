@@ -25,12 +25,6 @@
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     getXhr(xhr, onLoad, onError);
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-    xhr.addEventListener('timeout', function () {
-      onError();
-    });
     xhr.timeout = 10000; // 10s
     xhr.open('GET', URL_LOAD);
     xhr.send();
@@ -47,5 +41,5 @@
   window.backend = {
     load: load,
     save: save
-  }
+  };
 })();

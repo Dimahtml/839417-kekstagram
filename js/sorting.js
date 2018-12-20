@@ -2,6 +2,7 @@
 // этот модуль сортирует фотографии
 (function () {
   var QUANTITY_PHOTOS = 25;
+  var TIMEOUT = 500;
   // показываем блок с кнопками сортировки
   window.showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
@@ -33,7 +34,7 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
   window.sortByPopular = function (data, quantity) {
-    fillThePage(data, quantity);
+    window.fillThePage(data, quantity);
   };
   // показывает 10 случайных фотографий
   window.sortByNew = function (data, quantity) {
@@ -47,7 +48,7 @@
       dataCopy.splice(index, 1); // удаляем 1 элемент под индексом = index
       quantity--;
     }
-    fillThePage(newArray, 10);
+    window.fillThePage(newArray, 10);
   };
   window.sortByDiscussed = function (data) {
     var dataCopy2 = data.slice();
@@ -66,7 +67,7 @@
       }
       return 0;
     });
-    fillThePage(dataCopy2, 25);
+    window.fillThePage(dataCopy2, QUANTITY_PHOTOS);
   };
   var lastTimeout;
   // раздаем обработчики клика кнопкам
@@ -79,7 +80,7 @@
       cleanThePage();
       window.sortByPopular(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
   filterNew.addEventListener('click', function () {
     chooseButton(filterNew);
@@ -90,7 +91,7 @@
       cleanThePage();
       window.sortByNew(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
   filterDiscussed.addEventListener('click', function () {
     chooseButton(filterDiscussed);
@@ -101,6 +102,6 @@
       cleanThePage();
       window.sortByDiscussed(window.arrayOfObjects);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
 })();

@@ -17,8 +17,8 @@
     var createPhoto = function (someArrayOfObjects) {
       var photo = template.cloneNode(true);
       photo.querySelector('img').src = someArrayOfObjects.url;
-      photo.querySelector('.picture__likes').textContent = someArrayOfObjects.likes;
-      photo.querySelector('.picture__comments').textContent = someArrayOfObjects.comments.length;
+      photo.querySelector('.picture__likes').textContent = someArrayOfObjects.likes.toString();
+      photo.querySelector('.picture__comments').textContent = someArrayOfObjects.comments.length.toString();
       return photo;
     };
     // функция заполнения блока DOM-элементами на основе массива JS-объектов
@@ -41,26 +41,22 @@
       // адрес картинки
       bigPicture.querySelector('img').src = arrayOfObjects[index].url;
       // кол-во лайков
-      bigPicture.querySelector('.likes-count').textContent = arrayOfObjects[index].likes;
+      bigPicture.querySelector('.likes-count').textContent = arrayOfObjects[index].likes.toString();
       // кол-во комментариев
-      bigPicture.querySelector('.comments-count').textContent = arrayOfObjects[index].comments.length;
+      bigPicture.querySelector('.comments-count').textContent = arrayOfObjects[index].comments.length.toString();
       // Описание фотографии
-      bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].description;
+      bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].description.toString();
       // комментарии обнуляем перед открытием фото
       bigPicture.querySelector('.social__comments').innerHTML = '';
       // добавляем аватары и комментарии
-      // for (var k = 0; k < arrayOfObjects[index].comments.length; k++) {
-      for (var k = 0; (k < 5) && (k < arrayOfObjects[index].comments.length); k++) {
+      for (var j = 0; (j < 5) && (j < arrayOfObjects[index].comments.length); j++) {
         bigPicture.querySelector('.social__comments').innerHTML +=
         '<li class="social__comment"><img class="social__picture" src='
-         + arrayOfObjects[index].comments[k].avatar
+         + arrayOfObjects[index].comments[j].avatar
          + ' alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">'
-         + arrayOfObjects[index].comments[k].message
+         + arrayOfObjects[index].comments[j].message
          + '</p></li>';
       }
-      // кнопка "загрузить еще комменты"
-      // document.querySelector('.comments-loader').classList.add('hidden');
-      // находим кнопку закрытия окна (крестик) и добавляем ему обработчик событий
       var pictureCancel = document.querySelector('#picture-cancel');
       pictureCancel.addEventListener('click', function () {
         bigPicture.classList.add('hidden');
@@ -100,6 +96,4 @@
     window.fillThePage = fillThePage;
   };
   window.backend.load(downLoadSuccess);
-
-
 })();

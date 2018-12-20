@@ -9,6 +9,7 @@
   var textDescription = document.querySelector('.text__description');
 
   var hashtags = [];
+
   textHashtags.addEventListener('focus', function () {
     isFocusedOnField = 1;
   });
@@ -21,9 +22,11 @@
   textDescription.addEventListener('blur', function () {
     isFocusedOnField = 0;
   });
+
   var addRedBorder = function (element) {
     element.style.border = 'solid 5px red';
   };
+
   var removeRedBorder = function (element) {
     element.style.border = '';
   };
