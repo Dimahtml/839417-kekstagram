@@ -2,7 +2,6 @@
 // этот модуль сортирует фотографии
 (function () {
   var QUANTITY_PHOTOS = 25;
-
   // показываем блок с кнопками сортировки
   window.showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
@@ -78,7 +77,7 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByPopular(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.sortByPopular(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
     }, 500);
   });
@@ -89,7 +88,7 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByNew(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.sortByNew(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
     }, 500);
   });

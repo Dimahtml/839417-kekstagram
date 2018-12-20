@@ -5,6 +5,8 @@
 // принимает данные с сервера
 
 (function () {
+  var QUANTITY_PHOTOS = 25;
+  var ESC_KEYCODE = 27;
   // функция загружает данные с сервера вставляет на страницу мини-фотографии
   var downLoadSuccess = function (arrayOfObjects) {
     // шаблон, который будем копировать
@@ -28,7 +30,7 @@
       photoContainer.appendChild(fragment);
       window.showSortingBlock();
     };
-    window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+    window.fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
     // коллекция из мини-фотографий на странице
     window.miniPictures = document.querySelectorAll('.picture__img');
     // показываем, заполняем данными и закрываем большую фотографию
@@ -66,7 +68,7 @@
       });
       // закрываем окно
       document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.constants.ESC_KEYCODE) {
+        if (evt.keyCode === ESC_KEYCODE) {
           bigPicture.classList.add('hidden');
           document.querySelector('body').classList.remove('modal-open');
         }

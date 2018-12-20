@@ -2,6 +2,7 @@
 // этот модуль показывает и закрывет загружаемую фотографию (при нажатии кнопки ЗАГРУЗИТЬ) и
 // отправляет данные на сервер
 (function () {
+  var ESC_KEYCODE = 27;
   // Кнопка ЗАГРУЗИТЬ
   var uploadFile = document.querySelector('#upload-file');
   // Форма редактирования изображения
@@ -27,7 +28,7 @@
       window.clearForm();
     });
     document.addEventListener('keydown', function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         window.clearForm();
       }
     });
