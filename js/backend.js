@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   // прием данных с сервера
-  window.load = function (onLoad, onError) {
+  var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -22,7 +22,7 @@
     xhr.send();
   };
   // отправка данных на сервер
-  window.save = function (data, onLoad, onError) {
+  var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -35,4 +35,8 @@
     xhr.open('POST', window.constants.URL_SAVE);
     xhr.send(data);
   };
+  window.backend = {
+    load: load,
+    save: save
+  }
 })();

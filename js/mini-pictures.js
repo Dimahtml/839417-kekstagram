@@ -96,5 +96,5 @@
     window.addHandlerToAllPictures();
     window.arrayOfObjects = arrayOfObjects;
   };
-  window.load(downLoadSuccess);
+  window.backend.load(downLoadSuccess);
 })();

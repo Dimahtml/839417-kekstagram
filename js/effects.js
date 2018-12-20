@@ -1,15 +1,20 @@
 'use strict';
 // этот модуль применяет эффекты к загружаемой фотографии (масштаб, фильтр, движение ползунка)
 (function () {
-  var EFFECTS = ['effects__preview--none', 'effects__preview--chrome',
-    'effects__preview--sepia', 'effects__preview--marvin',
-    'effects__preview--phobos', 'effects__preview--heat'
-  ];
-  var FILTER_NAMES = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
   // шаг изменения масштаба изображения (25%);
   var STEP = 25;
   var SCALE_MINIMUM = 25;
   var SCALE_MAXIMUM = 100;
+  var effectNames = [
+    'effects__preview--none',
+    'effects__preview--chrome',
+    'effects__preview--sepia',
+    'effects__preview--marvin',
+    'effects__preview--phobos',
+    'effects__preview--heat'
+  ];
+  var filterNames = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+
   // КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
   var effects = document.querySelectorAll('.effects__radio');
   // фото "предварительный просмотр изображения"
@@ -52,7 +57,7 @@
         document.querySelector('.img-upload__effect-level').classList.remove('hidden');
       }
       imgUploadPreview.style.filter = filterName;
-      effectLevelPin.style.left = '100%'; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      effectLevelPin.style.left = '100%';
       effectLevelDepth.style.width = '100%';
       filterNameCurrent = filterName;
     });
@@ -60,8 +65,8 @@
   // переменная, которая = текущему выбранному эффекту (фильтру)
   var filterNameCurrent = '';
   // навешиваем обработчик на каждую из кнопок, которая переключает эффект (фильтр)
-  for (var q = 0; q < effects.length; q++) {
-    addClickHandlerEffect(effects[q], EFFECTS[q], FILTER_NAMES[q]);
+  for (var i = 0; i < effects.length; i++) {
+    addClickHandlerEffect(effects[i], effectNames[i], filterNames[i]);
   }
   // навешиваем обработчик на ползунок
   effectLevelPin.addEventListener('mousedown', function (evt) {

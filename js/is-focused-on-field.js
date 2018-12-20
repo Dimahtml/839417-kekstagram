@@ -2,7 +2,7 @@
 // этот модуль проверяет валидацию формы при загрузке фотографии (поля хеш-тегов и комментария)
 (function () {
   // переменная, которая следит за фокусом в поле хеш-тега или комментария
-  var isfocusedOnField = 0;
+  var isFocusedOnField = 0;
   // поле ввода хеш-тега
   var textHashtags = document.querySelector('.text__hashtags');
   // поле ввода комментария
@@ -10,16 +10,16 @@
   var hashtags = '';
   var arrayOfHashtags = [];
   textHashtags.addEventListener('focus', function () {
-    isfocusedOnField = 1;
+    isFocusedOnField = 1;
   });
   textHashtags.addEventListener('blur', function () {
-    isfocusedOnField = 0;
+    isFocusedOnField = 0;
   });
   textDescription.addEventListener('focus', function () {
-    isfocusedOnField = 1;
+    isFocusedOnField = 1;
   });
   textDescription.addEventListener('blur', function () {
-    isfocusedOnField = 0;
+    isFocusedOnField = 0;
   });
   var addRedBorder = function (element) {
     element.style.border = 'solid 5px red';
@@ -68,5 +68,5 @@
       textDescription.setCustomValidity('Достигнута максимальная длина комментария');
     }
   });
-  window.isfocusedOnField = isfocusedOnField;
+  window.isFocusedOnField = isFocusedOnField;
 })();

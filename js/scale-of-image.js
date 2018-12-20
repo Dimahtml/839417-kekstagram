@@ -27,7 +27,7 @@
       window.clearForm();
     });
     document.addEventListener('keydown', function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
+      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         window.clearForm();
       }
     });

@@ -32,7 +32,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
+      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);
@@ -67,7 +67,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isfocusedOnField === 1))) {
+      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);
@@ -88,7 +88,7 @@
   var form = document.querySelector('#upload-select-image');
   // при отправке формы: отменяем действие формы по умолчанию, закрываем окно с большой фоткой
   form.addEventListener('submit', function (evt) {
-    window.save(new FormData(form), upLoadSuccess, upLoadError);
+    window.backend.save(new FormData(form), upLoadSuccess, upLoadError);
     evt.preventDefault();
   });
   window.clearForm = clearForm;
