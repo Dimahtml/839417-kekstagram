@@ -5,15 +5,12 @@
 // принимает данные с сервера
 
 (function () {
-
   // функция загружает данные с сервера вставляет на страницу мини-фотографии
   var downLoadSuccess = function (arrayOfObjects) {
-
     // шаблон, который будем копировать
     var template = document.querySelector('#picture').content.querySelector('a');
     // сюда вставляем элементы
     var photoContainer = document.querySelector('.pictures');
-
     // функция создания DOM-элемента на основе JS-объекта
     var createPhoto = function (someArrayOfObjects) {
       var photo = template.cloneNode(true);
@@ -22,7 +19,6 @@
       photo.querySelector('.picture__comments').textContent = someArrayOfObjects.comments.length;
       return photo;
     };
-
     // функция заполнения блока DOM-элементами на основе массива JS-объектов
     window.fillThePage = function (someArrayOfObjects, quantityPhotos) {
       var fragment = document.createDocumentFragment();
@@ -32,17 +28,12 @@
       photoContainer.appendChild(fragment);
       window.showSortingBlock();
     };
-
     window.fillThePage(arrayOfObjects, window.constants.QUANTITY_PHOTOS);
-
     // коллекция из мини-фотографий на странице
     window.miniPictures = document.querySelectorAll('.picture__img');
-
     // показываем, заполняем данными и закрываем большую фотографию
     var showBigPicture = function (index) {
-
       document.querySelector('body').classList.add('modal-open');
-
       var bigPicture = document.querySelector('.big-picture');
       bigPicture.classList.remove('hidden');
       // адрес картинки
@@ -65,17 +56,14 @@
          + arrayOfObjects[index].comments[k].message
          + '</p></li>';
       }
-
       // кнопка "загрузить еще комменты"
       // document.querySelector('.comments-loader').classList.add('hidden');
-
       // находим кнопку закрытия окна (крестик) и добавляем ему обработчик событий
       var pictureCancel = document.querySelector('#picture-cancel');
       pictureCancel.addEventListener('click', function () {
         bigPicture.classList.add('hidden');
         document.querySelector('body').classList.remove('modal-open');
       });
-
       // закрываем окно
       document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.constants.ESC_KEYCODE) {
@@ -83,16 +71,13 @@
           document.querySelector('body').classList.remove('modal-open');
         }
       });
-
     };
-
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
     window.addclickHandler = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
       });
     };
-
     // навешиваем обработчик на каждую из маленьких фоток на главной странице
     window.addHandlerToAllPictures = function () {
       window.miniPictures = document.querySelectorAll('.picture__img');
@@ -108,13 +93,8 @@
         window.addclickHandler(window.miniPictures[i], str - 1);
       }
     };
-
     window.addHandlerToAllPictures();
-
     window.arrayOfObjects = arrayOfObjects;
-
   };
-
   window.load(downLoadSuccess);
-
 })();
