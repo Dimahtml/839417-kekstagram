@@ -1,6 +1,7 @@
 'use strict';
 // этот модуль отправляет данные на сервер
 (function () {
+  var ESC_KEYCODE = 27;
   // закрываем и очищаем форму
   var clearForm = function () {
     document.querySelector('.img-upload__overlay').classList.add('hidden');
@@ -32,7 +33,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);
@@ -67,7 +68,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === window.constants.ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);

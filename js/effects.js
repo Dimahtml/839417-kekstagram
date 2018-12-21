@@ -68,6 +68,12 @@
   for (var i = 0; i < effects.length; i++) {
     addClickHandlerEffect(effects[i], effectNames[i], filterNames[i]);
   }
+
+  var onClickPreventDefault = function (evt) {
+    evt.preventDefault();
+    effectLevelPin.removeEventListener('click', onClickPreventDefault);
+  };
+
   // навешиваем обработчик на ползунок
   effectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -88,7 +94,7 @@
       effectLevelPin.style.left = percentOfEffect + '%';
       // ограничиваем ползунок пределами слайдера
       if (coordsPin < 0) {
-        effectLevelPin.style.left = 0;
+        effectLevelPin.style.left = '0';
       }
       if (coordsPin > effectLevelWidth) {
         effectLevelPin.style.left = '100%';
@@ -97,18 +103,24 @@
       effectLevelValue.value = percentOfEffect;
       // яркая шкала (уровень эффекта)
       effectLevelDepth.style.width = percentOfEffect + '%';
-      if (filterNameCurrent === '') {
-        imgUploadPreview.style.filter = '';
-      } else if (filterNameCurrent === 'grayscale(1)') {
-        imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
-      } else if (filterNameCurrent === 'sepia(1)') {
-        imgUploadPreview.style.filter = 'sepia(' + percentOfEffect / 100 + ')';
-      } else if (filterNameCurrent === 'invert(100%)') {
-        imgUploadPreview.style.filter = 'invert(' + percentOfEffect + '%)';
-      } else if (filterNameCurrent === 'blur(3px)') {
-        imgUploadPreview.style.filter = 'blur(' + percentOfEffect / 100 * 3 + 'px)';
-      } else if (filterNameCurrent === 'brightness(3)') {
-        imgUploadPreview.style.filter = 'brightness(' + percentOfEffect / 100 * 3 + ')';
+
+      switch (filterNameCurrent) {
+        case 'grayscale(1)':
+          imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
+          break;
+        case 'sepia(1)':
+          imgUploadPreview.style.filter = 'sepia(' + percentOfEffect / 100 + ')';
+          break;
+        case 'invert(100%)':
+          imgUploadPreview.style.filter = 'invert(' + percentOfEffect + '%)';
+          break;
+        case 'blur(3px)':
+          imgUploadPreview.style.filter = 'blur(' + percentOfEffect / 100 * 3 + 'px)';
+          break;
+        case 'brightness(3)':
+          imgUploadPreview.style.filter = 'brightness(' + percentOfEffect / 100 * 3 + ')';
+          break;
+        default: imgUploadPreview.style.filter = '';
       }
     };
     var onMouseUp = function (upEvt) {
@@ -116,10 +128,6 @@
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       if (dragged) {
-        var onClickPreventDefault = function (evnt) {
-          evnt.preventDefault();
-          effectLevelPin.removeEventListener('click', onClickPreventDefault);
-        };
         effectLevelPin.addEventListener('click', onClickPreventDefault);
       }
     };

@@ -1,6 +1,8 @@
 'use strict';
 // этот модуль сортирует фотографии
 (function () {
+  var QUANTITY_PHOTOS = 25;
+  var TIMEOUT = 500;
   // показываем блок с кнопками сортировки
   window.showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
@@ -65,7 +67,7 @@
       }
       return 0;
     });
-    window.fillThePage(dataCopy2, 25);
+    window.fillThePage(dataCopy2, QUANTITY_PHOTOS);
   };
   var lastTimeout;
   // раздаем обработчики клика кнопкам
@@ -76,9 +78,9 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByPopular(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.sortByPopular(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
   filterNew.addEventListener('click', function () {
     chooseButton(filterNew);
@@ -87,9 +89,9 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByNew(window.arrayOfObjects, window.constants.QUANTITY_PHOTOS);
+      window.sortByNew(window.arrayOfObjects, QUANTITY_PHOTOS);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
   filterDiscussed.addEventListener('click', function () {
     chooseButton(filterDiscussed);
@@ -100,6 +102,6 @@
       cleanThePage();
       window.sortByDiscussed(window.arrayOfObjects);
       window.addHandlerToAllPictures();
-    }, 500);
+    }, TIMEOUT);
   });
 })();

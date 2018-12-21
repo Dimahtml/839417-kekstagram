@@ -1,14 +1,16 @@
 'use strict';
 (function () {
-  // прием данных с сервера
-  var load = function (onLoad, onError) {
-    var xhr = new XMLHttpRequest();
+  var STATUS_OK = 200;
+  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_SAVE = 'https://js.dump.academy/kekstagram';
+
+  var getXhr = function (xhr, onLoad, onError) {
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_OK) {
         onLoad(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError();
       }
     });
     xhr.addEventListener('error', function () {
@@ -17,26 +19,27 @@
     xhr.addEventListener('timeout', function () {
       onError();
     });
+  };
+
+  // прием данных с сервера
+  var load = function (onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    getXhr(xhr, onLoad, onError);
     xhr.timeout = 10000; // 10s
-    xhr.open('GET', window.constants.URL_LOAD);
+    xhr.open('GET', URL_LOAD);
     xhr.send();
   };
+
   // отправка данных на сервер
   var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError();
-      }
-    });
-    xhr.open('POST', window.constants.URL_SAVE);
+    getXhr(xhr, onLoad, onError);
+    xhr.open('POST', URL_SAVE);
     xhr.send(data);
   };
+
   window.backend = {
     load: load,
     save: save
-  }
+  };
 })();
