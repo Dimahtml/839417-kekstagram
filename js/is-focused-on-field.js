@@ -2,7 +2,7 @@
 // этот модуль проверяет валидацию формы при загрузке фотографии (поля хеш-тегов и комментария)
 (function () {
   // переменная, которая следит за фокусом в поле хеш-тега или комментария
-  var isFocusedOnField = 0;
+  var isFocusedOnField = false;
   // поле ввода хеш-тега
   var textHashtags = document.querySelector('.text__hashtags');
   // поле ввода комментария
@@ -11,16 +11,16 @@
   var hashtags = [];
 
   textHashtags.addEventListener('focus', function () {
-    isFocusedOnField = 1;
+    isFocusedOnField = true;
   });
   textHashtags.addEventListener('blur', function () {
-    isFocusedOnField = 0;
+    isFocusedOnField = false;
   });
   textDescription.addEventListener('focus', function () {
-    isFocusedOnField = 1;
+    isFocusedOnField = true;
   });
   textDescription.addEventListener('blur', function () {
-    isFocusedOnField = 0;
+    isFocusedOnField = false;
   });
 
   var addRedBorder = function (element) {
