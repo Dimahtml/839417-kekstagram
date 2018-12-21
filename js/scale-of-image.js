@@ -29,7 +29,7 @@
       window.clearForm();
     });
     document.addEventListener('keydown', function (evt) {
-      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
         window.clearForm();
       }
     });

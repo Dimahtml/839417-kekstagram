@@ -33,7 +33,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);
@@ -68,7 +68,7 @@
       document.removeEventListener('keydown', handlerESC);
     };
     var handlerESC = function (evt) {
-      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === 1))) {
+      if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
         main.removeChild(popup);
       }
       document.removeEventListener('click', handlerClick);
