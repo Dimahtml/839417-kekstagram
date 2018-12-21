@@ -13,7 +13,6 @@
     'effects__preview--phobos',
     'effects__preview--heat'
   ];
-  var filterNames = ['', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 
   // КОЛЛЕКЦИЯ кнопок смены эффектов (фильтров)
   var effects = document.querySelectorAll('.effects__radio');
@@ -48,15 +47,15 @@
   });
   // добавляем обработчик, который прописывает класс "cls" предварительной фотографии imageUploadPreview,
   // скрывает слайдер (если фильтр оригинал). устанавливает ползунок на 100% (при других фильтрах)
-  var addClickHandlerEffect = function (image, cls, filterName) {
+  var addClickHandlerEffect = function (image, filterName) {
     image.addEventListener('click', function () {
-      imgUploadPreview.setAttribute('class', cls);
-      if (cls === 'effects__preview--none') {
+      imgUploadPreview.setAttribute('class', filterName);
+      if (filterName === 'effects__preview--none') {
         document.querySelector('.img-upload__effect-level').classList.add('hidden');
       } else {
         document.querySelector('.img-upload__effect-level').classList.remove('hidden');
       }
-      imgUploadPreview.style.filter = filterName;
+      imgUploadPreview.style.filter = '';
       effectLevelPin.style.left = '100%';
       effectLevelDepth.style.width = '100%';
       filterNameCurrent = filterName;
@@ -66,7 +65,7 @@
   var filterNameCurrent = '';
   // навешиваем обработчик на каждую из кнопок, которая переключает эффект (фильтр)
   for (var i = 0; i < effects.length; i++) {
-    addClickHandlerEffect(effects[i], effectNames[i], filterNames[i]);
+    addClickHandlerEffect(effects[i], effectNames[i]);
   }
 
   var onClickPreventDefault = function (evt) {
@@ -104,19 +103,19 @@
       // яркая шкала (уровень эффекта)
       effectLevelDepth.style.width = percentOfEffect + '%';
       switch (filterNameCurrent) {
-        case 'grayscale(1)':
+        case 'effects__preview--chrome':
           imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
           break;
-        case 'sepia(1)':
+        case 'effects__preview--sepia':
           imgUploadPreview.style.filter = 'sepia(' + percentOfEffect / 100 + ')';
           break;
-        case 'invert(100%)':
+        case 'effects__preview--marvin':
           imgUploadPreview.style.filter = 'invert(' + percentOfEffect + '%)';
           break;
-        case 'blur(3px)':
+        case 'effects__preview--phobos':
           imgUploadPreview.style.filter = 'blur(' + percentOfEffect / 100 * 3 + 'px)';
           break;
-        case 'brightness(3)':
+        case 'effects__preview--heat':
           imgUploadPreview.style.filter = 'brightness(' + percentOfEffect / 100 * 3 + ')';
           break;
         default: imgUploadPreview.style.filter = '';
