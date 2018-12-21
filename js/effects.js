@@ -103,7 +103,6 @@
       effectLevelValue.value = percentOfEffect;
       // яркая шкала (уровень эффекта)
       effectLevelDepth.style.width = percentOfEffect + '%';
-
       switch (filterNameCurrent) {
         case 'grayscale(1)':
           imgUploadPreview.style.filter = 'grayscale(' + percentOfEffect / 100 + ')';
