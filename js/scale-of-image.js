@@ -31,7 +31,6 @@
     document.addEventListener('keydown', function (evt) {
       if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
         window.clearForm();
-        console.log(window.isFocusedOnField);
       }
     });
   });
