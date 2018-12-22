@@ -6,7 +6,11 @@
 
 (function () {
   var QUANTITY_PHOTOS = 25;
+  var QUANTITY_COMMENTS = 5;
   var ESC_KEYCODE = 27;
+  var AVATAR_WIDTH = 25;
+  var AVATAR_HEIGHT = 25;
+
   // функция загружает данные с сервера вставляет на страницу мини-фотографии
   var downLoadSuccess = function (arrayOfObjects) {
     // шаблон, который будем копировать
@@ -33,6 +37,26 @@
     fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
     // коллекция из мини-фотографий на странице
     window.miniPictures = document.querySelectorAll('.picture__img');
+
+    var createComment = function (someObject, commentIndex) {
+        var newLi = document.createElement('li');
+        newLi.classList.add('social__comment');
+
+        var newImg = document.createElement('img');
+        newImg.classList.add('social__picture');
+        newImg.src = someObject.comments[commentIndex].avatar;
+        newImg.alt = 'Аватар комментатора фотографии';
+        newImg.width = AVATAR_WIDTH;
+        newImg.height = AVATAR_HEIGHT;
+        newLi.appendChild(newImg);
+
+        var newP = document.createElement('p');
+        newP.textContent = someObject.comments[commentIndex].message;
+        newLi.appendChild(newP);
+
+        return newLi;
+    };
+
     // показываем, заполняем данными и закрываем большую фотографию
     var showBigPicture = function (index) {
       document.querySelector('body').classList.add('modal-open');
@@ -48,20 +72,20 @@
       bigPicture.querySelector('.social__caption').textContent = arrayOfObjects[index].description.toString();
       // комментарии обнуляем перед открытием фото
       bigPicture.querySelector('.social__comments').innerHTML = '';
+
       // добавляем аватары и комментарии
-      for (var j = 0; (j < 5) && (j < arrayOfObjects[index].comments.length); j++) {
-        bigPicture.querySelector('.social__comments').innerHTML +=
-        '<li class="social__comment"><img class="social__picture" src='
-         + arrayOfObjects[index].comments[j].avatar
-         + ' alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">'
-         + arrayOfObjects[index].comments[j].message
-         + '</p></li>';
+      var fragmentComment = document.createDocumentFragment();
+      for (var i = 0; (i < QUANTITY_COMMENTS) && (i < arrayOfObjects[index].comments.length); i++) {
+        fragmentComment.appendChild(createComment(arrayOfObjects[index], i));
       }
+      document.querySelector('.social__comments').appendChild(fragmentComment);
+
       var pictureCancel = document.querySelector('#picture-cancel');
       pictureCancel.addEventListener('click', function () {
         bigPicture.classList.add('hidden');
         document.querySelector('body').classList.remove('modal-open');
       });
+
       // закрываем окно
       document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === ESC_KEYCODE) {
