@@ -9,11 +9,14 @@
     document.querySelector('#upload-file').value = '';
     // сбрасываем значение поля хешей
     document.querySelector('.text__hashtags').value = '';
+    document.querySelector('.text__hashtags').style.border = '';
     // сбрасываем значение поля комментов и фильтров
     document.querySelector('.text__description').value = '';
+    document.querySelector('.text__description').style.border = '';
     document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
     document.querySelector('.img-upload__preview').querySelector('img').setAttribute('class', 'effects__preview--none');
   };
+
   // успешная отправка данных. показываем попап. закрываем попап.
   var upLoadSuccess = function () {
     clearForm();
