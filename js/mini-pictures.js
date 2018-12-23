@@ -36,25 +36,25 @@
     };
     fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
     // коллекция из мини-фотографий на странице
-    window.miniPictures = document.querySelectorAll('.picture__img');
+    var miniPictures = document.querySelectorAll('.picture__img');
 
     var createComment = function (singlePhoto, commentIndex) {
-        var newLi = document.createElement('li');
-        newLi.classList.add('social__comment');
+      var newLi = document.createElement('li');
+      newLi.classList.add('social__comment');
 
-        var newImg = document.createElement('img');
-        newImg.classList.add('social__picture');
-        newImg.src = singlePhoto.comments[commentIndex].avatar;
-        newImg.alt = 'Аватар комментатора фотографии';
-        newImg.width = AVATAR_WIDTH;
-        newImg.height = AVATAR_HEIGHT;
-        newLi.appendChild(newImg);
+      var newImg = document.createElement('img');
+      newImg.classList.add('social__picture');
+      newImg.src = singlePhoto.comments[commentIndex].avatar;
+      newImg.alt = 'Аватар комментатора фотографии';
+      newImg.width = AVATAR_WIDTH;
+      newImg.height = AVATAR_HEIGHT;
+      newLi.appendChild(newImg);
 
-        var newP = document.createElement('p');
-        newP.textContent = singlePhoto.comments[commentIndex].message;
-        newLi.appendChild(newP);
+      var newP = document.createElement('p');
+      newP.textContent = singlePhoto.comments[commentIndex].message;
+      newLi.appendChild(newP);
 
-        return newLi;
+      return newLi;
     };
 
     // показываем, заполняем данными и закрываем большую фотографию
@@ -101,10 +101,10 @@
       });
     };
     // навешиваем обработчик на каждую из маленьких фоток на главной странице
-    window.addHandlerToAllPictures = function () {
-      window.miniPictures = document.querySelectorAll('.picture__img');
-      for (var i = 0; i < window.miniPictures.length; i++) {
-        var str = window.miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
+    var addHandlerToAllPictures = function () {
+      miniPictures = document.querySelectorAll('.picture__img');
+      for (var i = 0; i < miniPictures.length; i++) {
+        var str = miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
         str = str.slice(0, -4);
         if (str > 9) {
           parseInt(str, 10);
@@ -112,12 +112,23 @@
           str = str.slice(-1);
         }
         parseInt(str, 10);
-        addClickHandler(window.miniPictures[i], str - 1);
+        addClickHandler(miniPictures[i], str - 1);
       }
+
+    // };
+    // window.addHandlerToAllPictures() = addHandlerToAllPictures;
+    // window.arrayOfObjects = arrayOfObjects;
+    // window.fillThePage = fillThePage;
     };
-    window.addHandlerToAllPictures();
-    window.arrayOfObjects = arrayOfObjects;
-    window.fillThePage = fillThePage;
+
+    addHandlerToAllPictures();
+
+    window.miniPictures = {
+      addHandlerToAllPictures: addHandlerToAllPictures,
+      arrayOfObjects: arrayOfObjects,
+      fillThePage: fillThePage
+    };
+
   };
   window.backend.load(downLoadSuccess);
 })();
