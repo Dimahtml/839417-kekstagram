@@ -105,6 +105,6 @@
     }, TIMEOUT);
   });
   window.sorting = {
-      showSortingBlock: showSortingBlock
-    };
+    showSortingBlock: showSortingBlock
+  };
 })();
