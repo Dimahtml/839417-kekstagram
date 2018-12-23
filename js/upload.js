@@ -92,5 +92,7 @@
     window.backend.save(new FormData(form), upLoadSuccess, upLoadError);
     evt.preventDefault();
   });
-  window.clearForm = clearForm;
+  window.upload = {
+    clearForm: clearForm
+  };
 })();

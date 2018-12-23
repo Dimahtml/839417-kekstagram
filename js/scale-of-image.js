@@ -25,14 +25,14 @@
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
 
     var addClickHandler = function () {
-      window.clearForm();
+      window.upload.clearForm();
       document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
       document.removeEventListener('keydown', addESCHandler);
     };
 
     var addESCHandler = function (evt) {
       if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
-        window.clearForm();
+        window.upload.clearForm();
         document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
         document.removeEventListener('keydown', addESCHandler);
       }
