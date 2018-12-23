@@ -45,8 +45,8 @@
       imgUploadPreview.style.transform = 'scale(' + window.scaleOfImage / 100 + ')';
     }
   });
-  // добавляем обработчик, который прописывает класс "cls" предварительной фотографии imageUploadPreview,
-  // скрывает слайдер (если фильтр оригинал). устанавливает ползунок на 100% (при других фильтрах)
+  // добавляем обработчик, который скрывает слайдер (если фильтр оригинал).
+  // устанавливает ползунок на 100% (при других фильтрах)
   var addClickHandlerEffect = function (image, filterName) {
     image.addEventListener('click', function () {
       imgUploadPreview.setAttribute('class', filterName);

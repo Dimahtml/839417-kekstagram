@@ -4,7 +4,7 @@
   var QUANTITY_PHOTOS = 25;
   var TIMEOUT = 500;
   // показываем блок с кнопками сортировки
-  window.showSortingBlock = function () {
+  var showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   };
   // находим кнопки сортировки
@@ -33,11 +33,11 @@
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
-  window.sortByPopular = function (data, quantity) {
-    window.fillThePage(data, quantity);
+  var sortByPopular = function (data, quantity) {
+    window.miniPictures.fillThePage(data, quantity);
   };
   // показывает 10 случайных фотографий
-  window.sortByNew = function (data, quantity) {
+  var sortByNew = function (data, quantity) {
     var dataCopy = data.slice();
     var newArray = [];
     var index;
@@ -48,9 +48,9 @@
       dataCopy.splice(index, 1); // удаляем 1 элемент под индексом = index
       quantity--;
     }
-    window.fillThePage(newArray, 10);
+    window.miniPictures.fillThePage(newArray, 10);
   };
-  window.sortByDiscussed = function (data) {
+  var sortByDiscussed = function (data) {
     var dataCopy2 = data.slice();
     dataCopy2.sort(function (a, b) {
       if (a.comments.length < b.comments.length) {
@@ -67,7 +67,7 @@
       }
       return 0;
     });
-    window.fillThePage(dataCopy2, QUANTITY_PHOTOS);
+    window.miniPictures.fillThePage(dataCopy2, QUANTITY_PHOTOS);
   };
   var lastTimeout;
   // раздаем обработчики клика кнопкам
@@ -78,8 +78,8 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByPopular(window.arrayOfObjects, QUANTITY_PHOTOS);
-      window.addHandlerToAllPictures();
+      sortByPopular(window.miniPictures.arrayOfObjects, QUANTITY_PHOTOS);
+      window.miniPictures.addHandlerToAllPictures();
     }, TIMEOUT);
   });
   filterNew.addEventListener('click', function () {
@@ -89,8 +89,8 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByNew(window.arrayOfObjects, QUANTITY_PHOTOS);
-      window.addHandlerToAllPictures();
+      sortByNew(window.miniPictures.arrayOfObjects, QUANTITY_PHOTOS);
+      window.miniPictures.addHandlerToAllPictures();
     }, TIMEOUT);
   });
   filterDiscussed.addEventListener('click', function () {
@@ -100,8 +100,11 @@
     }
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
-      window.sortByDiscussed(window.arrayOfObjects);
-      window.addHandlerToAllPictures();
+      sortByDiscussed(window.miniPictures.arrayOfObjects);
+      window.miniPictures.addHandlerToAllPictures();
     }, TIMEOUT);
   });
+  window.sorting = {
+    showSortingBlock: showSortingBlock
+  };
 })();
