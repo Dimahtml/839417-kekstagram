@@ -80,19 +80,24 @@
       }
       document.querySelector('.social__comments').appendChild(fragmentComment);
 
-      var pictureCancel = document.querySelector('#picture-cancel');
-      pictureCancel.addEventListener('click', function () {
+      var addClickHandler = function () {
         bigPicture.classList.add('hidden');
         document.querySelector('body').classList.remove('modal-open');
-      });
+        document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
+        document.removeEventListener('keydown', addESCHandler);
+      };
 
-      // закрываем окно
-      document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === ESC_KEYCODE) {
+      var addESCHandler = function (evt) {
+        if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
           bigPicture.classList.add('hidden');
           document.querySelector('body').classList.remove('modal-open');
+          document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
+          document.removeEventListener('keydown', addESCHandler);
         }
-      });
+      };
+
+      document.querySelector('#picture-cancel').addEventListener('click', addClickHandler);
+      document.addEventListener('keydown', addESCHandler);
     };
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
     var addClickHandler = function (miniPicture, miniPictureIndex) {

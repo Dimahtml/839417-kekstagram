@@ -10,17 +10,13 @@
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
   // устанавливаем масштаб по умолчанию = 100%
   document.querySelector('.scale__control--value').value = DEFAULT_SCALE;
-  // масштаб изображения
-                        // var scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+
   // показываем форму редактирования загружаемого изображения (и прячем слайдер),
   // запускаем обработчик для закрытия формы
-
   uploadFile.addEventListener('change', function () {
-                    // console.log('scaleOfImage = ', scaleOfImage);
     imgUploadOverlay.classList.remove('hidden');
     // устанавливаем масштаб 100% при открытии формы
     document.querySelector('.scale__control--value').value = DEFAULT_SCALE;
-                      // scaleOfImage = 100;
     document.querySelector('.img-upload__preview').querySelector('img').style.transform = 'scale(1)';
     document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
@@ -42,7 +38,4 @@
     document.querySelector('#upload-cancel').addEventListener('click', addClickHandler);
     document.addEventListener('keydown', addESCHandler);
   });
-
-  // масштаб изображения
-                         // window.scaleOfImage = scaleOfImage;
 })();
