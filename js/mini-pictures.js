@@ -38,20 +38,20 @@
     // коллекция из мини-фотографий на странице
     window.miniPictures = document.querySelectorAll('.picture__img');
 
-    var createComment = function (someObject, commentIndex) {
+    var createComment = function (singlePhoto, commentIndex) {
         var newLi = document.createElement('li');
         newLi.classList.add('social__comment');
 
         var newImg = document.createElement('img');
         newImg.classList.add('social__picture');
-        newImg.src = someObject.comments[commentIndex].avatar;
+        newImg.src = singlePhoto.comments[commentIndex].avatar;
         newImg.alt = 'Аватар комментатора фотографии';
         newImg.width = AVATAR_WIDTH;
         newImg.height = AVATAR_HEIGHT;
         newLi.appendChild(newImg);
 
         var newP = document.createElement('p');
-        newP.textContent = someObject.comments[commentIndex].message;
+        newP.textContent = singlePhoto.comments[commentIndex].message;
         newLi.appendChild(newP);
 
         return newLi;

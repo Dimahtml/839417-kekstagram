@@ -4,7 +4,7 @@
   var QUANTITY_PHOTOS = 25;
   var TIMEOUT = 500;
   // показываем блок с кнопками сортировки
-  window.showSortingBlock = function () {
+  var showSortingBlock = function () {
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   };
   // находим кнопки сортировки
@@ -104,4 +104,5 @@
       window.addHandlerToAllPictures();
     }, TIMEOUT);
   });
+  window.showSortingBlock = showSortingBlock;
 })();
