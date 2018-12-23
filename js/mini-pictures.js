@@ -32,7 +32,7 @@
         fragment.appendChild(createPhoto(someArrayOfObjects[i]));
       }
       photoContainer.appendChild(fragment);
-      window.showSortingBlock();
+      window.sorting.showSortingBlock();
     };
     fillThePage(arrayOfObjects, QUANTITY_PHOTOS);
     // коллекция из мини-фотографий на странице
@@ -114,21 +114,13 @@
         parseInt(str, 10);
         addClickHandler(miniPictures[i], str - 1);
       }
-
-    // };
-    // window.addHandlerToAllPictures() = addHandlerToAllPictures;
-    // window.arrayOfObjects = arrayOfObjects;
-    // window.fillThePage = fillThePage;
     };
-
     addHandlerToAllPictures();
-
     window.miniPictures = {
       addHandlerToAllPictures: addHandlerToAllPictures,
       arrayOfObjects: arrayOfObjects,
       fillThePage: fillThePage
     };
-
   };
   window.backend.load(downLoadSuccess);
 })();
