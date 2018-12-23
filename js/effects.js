@@ -27,22 +27,23 @@
   // кнопки МИНУС и ПЛЮС
   var scaleControlSmaller = document.querySelector('.scale__control--smaller');
   var scaleControlBigger = document.querySelector('.scale__control--bigger');
-  // масштаб изображения
-  window.scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+  var scaleOfImage;
   // нажатие на кнопку МИНУС
   scaleControlSmaller.addEventListener('click', function () {
-    if (window.scaleOfImage > SCALE_MINIMUM) {
-      document.querySelector('.scale__control--value').value = (window.scaleOfImage - STEP) + '%';
-      window.scaleOfImage -= STEP;
-      imgUploadPreview.style.transform = 'scale(' + window.scaleOfImage / 100 + ')';
+    scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+    if (scaleOfImage > SCALE_MINIMUM) {
+      document.querySelector('.scale__control--value').value = (scaleOfImage - STEP) + '%';
+      scaleOfImage -= STEP;
+      imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
     }
   });
   // нажатие на кнопку ПЛЮС
   scaleControlBigger.addEventListener('click', function () {
-    if (window.scaleOfImage < SCALE_MAXIMUM) {
-      document.querySelector('.scale__control--value').value = (window.scaleOfImage + STEP) + '%';
-      window.scaleOfImage += STEP;
-      imgUploadPreview.style.transform = 'scale(' + window.scaleOfImage / 100 + ')';
+    scaleOfImage = parseInt(document.querySelector('.scale__control--value').value, 10);
+    if (scaleOfImage < SCALE_MAXIMUM) {
+      document.querySelector('.scale__control--value').value = (scaleOfImage + STEP) + '%';
+      scaleOfImage += STEP;
+      imgUploadPreview.style.transform = 'scale(' + scaleOfImage / 100 + ')';
     }
   });
   // добавляем обработчик, который скрывает слайдер (если фильтр оригинал).
