@@ -13,7 +13,6 @@
     document.querySelector('.text__description').value = '';
     document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
     document.querySelector('.img-upload__preview').querySelector('img').setAttribute('class', 'effects__preview--none');
-    window.scaleOfImage = 100;
   };
   // успешная отправка данных. показываем попап. закрываем попап.
   var upLoadSuccess = function () {
