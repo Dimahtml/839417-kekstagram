@@ -48,7 +48,7 @@
   });
   // добавляем обработчик, который скрывает слайдер (если фильтр оригинал).
   // устанавливает ползунок на 100% (при других фильтрах)
-  var addClickHandlerEffect = function (image, filterName) {
+  var onEffectPictureClick = function (image, filterName) {
     image.addEventListener('click', function () {
       imgUploadPreview.setAttribute('class', filterName);
       if (filterName === 'effects__preview--none') {
@@ -66,7 +66,7 @@
   var filterNameCurrent = '';
   // навешиваем обработчик на каждую из кнопок, которая переключает эффект (фильтр)
   for (var i = 0; i < effects.length; i++) {
-    addClickHandlerEffect(effects[i], effectNames[i]);
+    onEffectPictureClick(effects[i], effectNames[i]);
   }
 
   var onClickPreventDefault = function (evt) {

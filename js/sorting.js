@@ -79,7 +79,7 @@
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
       sortByPopular(window.miniPictures.arrayOfObjects, QUANTITY_PHOTOS);
-      window.miniPictures.addHandlerToAllPictures();
+      window.miniPictures.addMiniPictureHandlers();
     }, TIMEOUT);
   });
   filterNew.addEventListener('click', function () {
@@ -90,7 +90,7 @@
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
       sortByNew(window.miniPictures.arrayOfObjects, QUANTITY_PHOTOS);
-      window.miniPictures.addHandlerToAllPictures();
+      window.miniPictures.addMiniPictureHandlers();
     }, TIMEOUT);
   });
   filterDiscussed.addEventListener('click', function () {
@@ -101,7 +101,7 @@
     lastTimeout = window.setTimeout(function () {
       cleanThePage();
       sortByDiscussed(window.miniPictures.arrayOfObjects);
-      window.miniPictures.addHandlerToAllPictures();
+      window.miniPictures.addMiniPictureHandlers();
     }, TIMEOUT);
   });
   window.sorting = {

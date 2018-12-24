@@ -80,33 +80,33 @@
       }
       document.querySelector('.social__comments').appendChild(fragmentComment);
 
-      var addClickHandler = function () {
+      var onCancelButtonClick = function () {
         bigPicture.classList.add('hidden');
         document.querySelector('body').classList.remove('modal-open');
-        document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
-        document.removeEventListener('keydown', addESCHandler);
+        document.querySelector('#picture-cancel').removeEventListener('click', onCancelButtonClick);
+        document.removeEventListener('keydown', onDocumentESCpress);
       };
 
-      var addESCHandler = function (evt) {
+      var onDocumentESCpress = function (evt) {
         if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
           bigPicture.classList.add('hidden');
           document.querySelector('body').classList.remove('modal-open');
-          document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
-          document.removeEventListener('keydown', addESCHandler);
+          document.querySelector('#picture-cancel').removeEventListener('click', onCancelButtonClick);
+          document.removeEventListener('keydown', onDocumentESCpress);
         }
       };
 
-      document.querySelector('#picture-cancel').addEventListener('click', addClickHandler);
-      document.addEventListener('keydown', addESCHandler);
+      document.querySelector('#picture-cancel').addEventListener('click', onCancelButtonClick);
+      document.addEventListener('keydown', onDocumentESCpress);
     };
     // добавляем обработчик на мини-фотографию, который показывает ее в полном размере
-    var addClickHandler = function (miniPicture, miniPictureIndex) {
+    var onMiniPictureClick = function (miniPicture, miniPictureIndex) {
       miniPicture.addEventListener('click', function () {
         showBigPicture(miniPictureIndex);
       });
     };
     // навешиваем обработчик на каждую из маленьких фоток на главной странице
-    var addHandlerToAllPictures = function () {
+    var addMiniPictureHandlers = function () {
       miniPictures = document.querySelectorAll('.picture__img');
       for (var i = 0; i < miniPictures.length; i++) {
         var str = miniPictures[i].src.slice(-6); // индекс фото берем из его адреса
@@ -117,12 +117,12 @@
           str = str.slice(-1);
         }
         parseInt(str, 10);
-        addClickHandler(miniPictures[i], str - 1);
+        onMiniPictureClick(miniPictures[i], str - 1);
       }
     };
-    addHandlerToAllPictures();
+    addMiniPictureHandlers();
     window.miniPictures = {
-      addHandlerToAllPictures: addHandlerToAllPictures,
+      addMiniPictureHandlers: addMiniPictureHandlers,
       arrayOfObjects: arrayOfObjects,
       fillThePage: fillThePage
     };

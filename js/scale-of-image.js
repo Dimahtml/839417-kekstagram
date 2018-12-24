@@ -21,21 +21,21 @@
     document.querySelector('.img-upload__preview').querySelector('img').style.filter = '';
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
 
-    var addClickHandler = function () {
+    var onCancelButtonClick = function () {
       window.upload.clearForm();
-      document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
-      document.removeEventListener('keydown', addESCHandler);
+      document.querySelector('#upload-cancel').removeEventListener('click', onCancelButtonClick);
+      document.removeEventListener('keydown', onDocumentESCpress);
     };
 
-    var addESCHandler = function (evt) {
+    var onDocumentESCpress = function (evt) {
       if ((evt.keyCode === ESC_KEYCODE) && (!(window.isFocusedOnField === true))) {
         window.upload.clearForm();
-        document.querySelector('#upload-cancel').removeEventListener('click', addClickHandler);
-        document.removeEventListener('keydown', addESCHandler);
+        document.querySelector('#upload-cancel').removeEventListener('click', onCancelButtonClick);
+        document.removeEventListener('keydown', onDocumentESCpress);
       }
     };
 
-    document.querySelector('#upload-cancel').addEventListener('click', addClickHandler);
-    document.addEventListener('keydown', addESCHandler);
+    document.querySelector('#upload-cancel').addEventListener('click', onCancelButtonClick);
+    document.addEventListener('keydown', onDocumentESCpress);
   });
 })();
